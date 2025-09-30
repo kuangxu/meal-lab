@@ -1,111 +1,195 @@
 # Meal Lab
 
-A modern web application for optimizing weekly meal plans based on nutritional requirements.
+**Meal Lab** is a smart meal planning application that helps you create the perfect weekly meal plan. Think of it as a nutritionist and chef combined - it takes your dietary requirements and finds the best combination of meals to meet your nutritional goals while keeping costs low.
+
+## What Does This Do?
+
+Imagine you have a list of 50 different meals, each with different nutritional values and costs. You want to plan 7 meals for the week (one per day) that:
+- Meet your specific nutritional requirements (like "I need at least 20g protein per meal")
+- Don't exceed your budget
+- Don't repeat the same meal too often
+- Give you the best value for your money
+
+**Meal Lab** uses advanced mathematics (linear optimization) to solve this puzzle automatically. Instead of you spending hours trying different combinations, the computer finds the optimal solution in seconds.
+
+## How It Works (The Math)
+
+The application uses **Linear Programming** to solve the meal planning problem. Here's the mathematical formulation:
+
+### Decision Variables
+Let $x_{i,j}$ be a binary variable where:
+- $x_{i,j} = 1$ if meal $i$ is selected for day $j$
+- $x_{i,j} = 0$ if meal $i$ is not selected for day $j$
+
+### Objective Function
+**Minimize total cost:**
+$$\min \sum_{i=1}^{n} \sum_{j=1}^{7} c_i \cdot x_{i,j}$$
+
+Where $c_i$ is the cost of meal $i$.
+
+### Constraints
+
+**1. Exactly one meal per day:**
+$$\sum_{i=1}^{n} x_{i,j} = 1 \quad \forall j \in \{1,2,\ldots,7\}$$
+
+**2. Nutritional requirements (average per meal):**
+$$\frac{1}{7} \sum_{i=1}^{n} \sum_{j=1}^{7} n_{i,k} \cdot x_{i,j} \geq N_{k}^{min} \quad \forall k$$
+$$\frac{1}{7} \sum_{i=1}^{n} \sum_{j=1}^{7} n_{i,k} \cdot x_{i,j} \leq N_{k}^{max} \quad \forall k$$
+
+Where:
+- $n_{i,k}$ = amount of nutrient $k$ in meal $i$
+- $N_{k}^{min}$ = minimum required amount of nutrient $k$ per meal
+- $N_{k}^{max}$ = maximum allowed amount of nutrient $k$ per meal
+
+**3. Meal frequency limit:**
+$$\sum_{j=1}^{7} x_{i,j} \leq F \quad \forall i$$
+
+Where $F$ is the maximum number of times a meal can appear in the week.
+
+**4. Binary constraints:**
+$$x_{i,j} \in \{0,1\} \quad \forall i,j$$
 
 ## Features
 
-- **File Upload**: Upload JSON files containing meal options and their nutritional content
-- **Nutritional Requirements**: Set minimum and maximum limits for various nutrients
-- **Meal Plan Generation**: Generate optimized weekly meal plans
-- **Modern UI**: Clean black and white design using Tailwind CSS
+- 🍽️ **Smart Meal Selection**: Uses linear optimization to find the best meal combinations
+- 📊 **Nutritional Analysis**: Ensures your meals meet specific macro and micronutrient requirements
+- 💰 **Cost Optimization**: Minimizes total weekly meal costs
+- ⭐ **User Ratings**: Rate meals based on your preferences
+- 📈 **Visual Analytics**: See nutritional breakdowns with interactive charts
+- 🎯 **Flexible Constraints**: Set meal frequency limits and nutritional bounds
 
-## Setup Instructions
+## Getting Started
 
-1. **Create and Activate Virtual Environment**:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+### Prerequisites
+- Python 3.8 or higher
+- A web browser
 
-2. **Install Python Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the Application**:
-   ```bash
-   python app.py
-   ```
-
-4. **Access the Application**:
-   Open your browser and go to `http://localhost:5001`
-
-## Usage
-
-1. **Upload Meal Data**: Upload a JSON file containing your meal options with nutritional information
-2. **Set Requirements**: Configure your minimum and maximum nutritional requirements
-3. **Generate Plan**: Click "Create Meal Plan" to generate your weekly meal plan
-4. **View Results**: Review your optimized meal plan for the week
-
-## JSON File Format
-
-Your meal data JSON file should contain an array of meal objects with the following structure:
-
-```json
-[
-  {
-    "title": "Classic Italian Margherita Pizza",
-    "description": "Thin crust topped with fresh tomato sauce, mozzarella cheese, and basil leaves.",
-    "estimated_cost_usd": 8.0,
-    "calories": 250,
-    "macros": {
-      "protein": 10,
-      "carbs": 30,
-      "fat": 10
-    },
-    "micros": {
-      "vitamin_a_mcg": 200,
-      "vitamin_c_mg": 10,
-      "vitamin_d_mcg": 0,
-      "vitamin_e_mg": 1,
-      "calcium_mg": 200,
-      "iron_mg": 1.5,
-      "magnesium_mg": 20,
-      "potassium_mg": 250,
-      "sodium_mg": 400,
-      "zinc_mg": 1
-    }
-  }
-]
+### Step 1: Download the Code
+```bash
+git clone https://github.com/kuangxu/meal_lab.git
+cd meal_lab
 ```
 
-## Nutritional Fields
+### Step 2: Set Up Python Environment
+Create a virtual environment (this keeps the project's dependencies separate from your system):
 
-### Basic Information
-- `title`: Name of the meal
-- `description`: Description of the meal
-- `estimated_cost_usd`: Estimated cost in USD
-- `calories`: Energy content in calories
+```bash
+# Create virtual environment
+python3 -m venv venv
 
-### Macronutrients (macros)
-- `protein`: Protein content in grams
-- `carbs`: Carbohydrate content in grams
-- `fat`: Fat content in grams
+# Activate it (choose the command for your system)
+# On Mac/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+```
 
-### Micronutrients (micros)
-- `vitamin_a_mcg`: Vitamin A in micrograms
-- `vitamin_c_mg`: Vitamin C in milligrams
-- `vitamin_d_mcg`: Vitamin D in micrograms
-- `vitamin_e_mg`: Vitamin E in milligrams
-- `calcium_mg`: Calcium in milligrams
-- `iron_mg`: Iron in milligrams
-- `magnesium_mg`: Magnesium in milligrams
-- `potassium_mg`: Potassium in milligrams
-- `sodium_mg`: Sodium in milligrams
-- `zinc_mg`: Zinc in milligrams
+You'll know it's working when you see `(venv)` at the beginning of your command prompt.
 
-## Development
+### Step 3: Install Required Packages
+```bash
+pip install -r requirements.txt
+```
 
-The application uses:
-- **Backend**: Python Flask
-- **Frontend**: HTML with Tailwind CSS
-- **File Upload**: Werkzeug for secure file handling
-- **Algorithm**: Basic meal selection (can be enhanced with optimization algorithms)
+This installs all the necessary Python libraries (Flask, OR-Tools, etc.).
 
-## Future Enhancements
+### Step 4: Run the Application
+```bash
+python app.py
+```
 
-- Advanced optimization algorithms (linear programming, genetic algorithms)
-- User authentication and meal plan history
-- Recipe integration
-- Shopping list generation
-- Nutritional analysis and reporting
+You should see output like:
+```
+* Running on http://127.0.0.1:5001
+* Debug mode: on
+```
+
+### Step 5: Open in Your Browser
+Open your web browser and go to: **http://localhost:5001**
+
+## Sample Output
+
+Here's an example of a meal plan generated by Meal Lab:
+
+![Sample Meal Plan](example.png)
+
+## How to Use
+
+1. **Set Your Requirements**: 
+   - Choose a nutritional profile (Healthy Adult, Weight Loss, etc.) or set custom values
+   - Specify minimum and maximum amounts for calories, protein, carbs, fat, and vitamins
+
+2. **Choose Optimization Goal**:
+   - **Minimize Cost**: Find the cheapest meals that meet your requirements
+   - **Maximize Rating**: Find the highest-rated meals that meet your requirements
+
+3. **Set Meal Frequency**: Choose how many times the same meal can appear in your week
+
+4. **Generate Your Plan**: Click "Create Meal Plan" and watch the magic happen!
+
+5. **Review Results**: 
+   - See your weekly meal schedule
+   - Check nutritional analysis
+   - View cost breakdown
+   - Explore the nutrition visualization chart
+
+## Rate Your Meals
+
+Visit the "Rate Meals" page to:
+- Rate meals from 1-10 based on your preferences
+- Sort meals by rating, price, or nutritional content
+- Reset all ratings back to default
+
+## Technical Details
+
+### Built With
+- **Backend**: Python Flask (web framework)
+- **Optimization**: Google OR-Tools (linear programming solver)
+- **Frontend**: HTML, CSS (Tailwind), JavaScript
+- **Charts**: Chart.js for data visualization
+
+### File Structure
+```
+meal_lab/
+├── data/                    # Data files
+│   ├── meals.json          # Meal database
+│   ├── nutritional_profiles.json  # Predefined profiles
+│   └── config.json         # App configuration
+├── src/                    # Core logic
+│   └── meal_optimizer.py   # Optimization engine
+├── templates/              # Web pages
+│   ├── index.html         # Main page
+│   └── ratings.html       # Rating page
+├── app.py                 # Main application
+└── requirements.txt       # Python dependencies
+```
+
+## Troubleshooting
+
+**"Command not found: python3"**
+- Try `python` instead of `python3`
+- Make sure Python is installed: https://python.org
+
+**"Module not found" errors**
+- Make sure you activated the virtual environment
+- Run `pip install -r requirements.txt` again
+
+**App won't start**
+- Check if port 5001 is already in use
+- Try a different port by editing `app.py`
+
+**Browser shows "This site can't be reached"**
+- Make sure the app is running (you should see output in terminal)
+- Try `http://127.0.0.1:5001` instead of `localhost:5001`
+
+## Contributing
+
+Feel free to submit issues, feature requests, or pull requests to improve Meal Lab!
+
+## License
+
+© 2025 Kuang Xu. All rights reserved.
+
+---
+
+*Meal Lab - Where mathematics meets meal planning* 🍽️📊
