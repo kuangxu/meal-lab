@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-gray': '#f8f9fa',
+                        'custom-dark': '#212529'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-black min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-black text-white py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-bold">Meal Lab</div>
+            <div class="space-x-6">
+                <a href="#setup" class="hover:text-gray-300 transition-colors">Setup</a>
+                <a href="#plan" class="hover:text-gray-300 transition-colors">Meal Plan</a>
+                <a href="/ratings" class="hover:text-gray-300 transition-colors">Rate Meals</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <header class="text-center mb-12" id="setup">
+            <h1 class="text-4xl font-bold text-black mb-4">Meal Lab</h1>
+            <p class="text-gray-600 text-lg">Plan your weekly dinners based on nutritional requirements</p>
+        </header>
+
+        <!-- Parameters Section -->
+        <div class="max-w-4xl mx-auto mb-12">
+
+            <!-- Nutritional Requirements Section - Redesigned -->
+            <div class="bg-white p-6 rounded-lg border border-gray-200">
+                <h2 class="text-2xl font-semibold mb-6 text-black">Nutritional Requirements</h2>
+                <p class="text-sm text-gray-600 mb-6">Values represent recommended average per meal based on USDA guidelines</p>
+                
+                <!-- Nutritional Profile Chips -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Select Nutritional Profile</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="profile-chip bg-black text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300" data-profile="healthy-adult">
+                            Healthy Adult
+                        </button>
+                        <button class="profile-chip bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300" data-profile="weight-loss">
+                            Weight Loss
+                        </button>
+                        <button class="profile-chip bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300" data-profile="keto">
+                            Keto
+                        </button>
+                        <button class="profile-chip bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300" data-profile="high-protein">
+                            High Protein
+                        </button>
+                        <button class="profile-chip bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300" data-profile="athlete">
+                            Athlete
+                        </button>
+                        <button class="profile-chip bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors border border-gray-300" data-profile="mediterranean">
+                            Mediterranean
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Macronutrients Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Macronutrients</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Calories -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Calories</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minCalories" placeholder="2000" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxCalories" placeholder="2500" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Protein -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Protein (g)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minProtein" placeholder="50" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxProtein" placeholder="150" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carbs -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Carbs (g)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minCarbs" placeholder="130" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxCarbs" placeholder="300" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fat -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Fat (g)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minFat" placeholder="20" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxFat" placeholder="65" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Micronutrients Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Micronutrients</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        <!-- Vitamin A -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Vitamin A (mcg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minVitaminA" placeholder="700" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxVitaminA" placeholder="3000" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vitamin C -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Vitamin C (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minVitaminC" placeholder="65" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxVitaminC" placeholder="2000" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vitamin D -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Vitamin D (mcg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minVitaminD" placeholder="15" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxVitaminD" placeholder="100" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vitamin E -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Vitamin E (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minVitaminE" placeholder="15" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxVitaminE" placeholder="1000" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calcium -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Calcium (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minCalcium" placeholder="1000" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxCalcium" placeholder="2500" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Iron -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Iron (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minIron" placeholder="8" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxIron" placeholder="45" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Magnesium -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Magnesium (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minMagnesium" placeholder="320" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxMagnesium" placeholder="700" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Potassium -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Potassium (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minPotassium" placeholder="3500" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxPotassium" placeholder="6000" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sodium -->
+                        <div class="bg-white p-4 rounded-lg border border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-3">Sodium (mg)</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Min</label>
+                                    <input type="number" id="minSodium" placeholder="500" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-600 mb-1">Max</label>
+                                    <input type="number" id="maxSodium" placeholder="2300" 
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Optimization Objective -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-gray-800">Optimization Objective</h3>
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="objective" value="minimize_cost" checked 
+                                   class="mr-2 text-black focus:ring-black">
+                            <span class="text-sm font-medium text-gray-800">Minimize Cost</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="objective" value="maximize_rating" 
+                                   class="mr-2 text-black focus:ring-black">
+                            <span class="text-sm font-medium text-gray-800">Maximize User Rating</span>
+                        </label>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">
+                        Choose whether to minimize total cost or maximize total user rating of selected meals.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Meal Frequency Control -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-4 text-gray-800">Meal Frequency</h3>
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <label class="text-sm font-medium text-gray-800">Max times each meal can appear:</label>
+                        <select id="mealFrequency" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+                            <option value="1">1 time</option>
+                            <option value="2" selected>2 times</option>
+                            <option value="3">3 times</option>
+                            <option value="4">4 times</option>
+                            <option value="5">5 times</option>
+                            <option value="6">6 times</option>
+                            <option value="7">7 times (unlimited)</option>
+                        </select>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">
+                        Control how many times the same meal can be selected in your meal plan. Lower values increase variety.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex gap-3 justify-center mt-6">
+                <button id="generateBtn" 
+                        class="bg-black text-white py-2 px-6 rounded-lg hover:bg-gray-800 transition-colors duration-200 font-medium text-base">
+                    Create Meal Plan
+                </button>
+            </div>
+        </div>
+
+        <!-- Content Sections with Constrained Width -->
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Meal Plan Section -->
+            <div class="mb-12" id="plan">
+                <h2 class="text-3xl font-bold text-black mb-6">Meal Plan</h2>
+                <div id="mealPlanResults" class="space-y-4">
+                    <div class="text-center text-gray-500 py-8">
+                        <p>Set your nutritional requirements and click "Create Meal Plan" to generate your weekly dinner plan.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-300">© 2025 Kuang Xu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        // Generate meal plan functionality
+        document.getElementById('generateBtn').addEventListener('click', async () => {
+            const requirements = {
+                // Basic Nutrition
+                minCalories: parseInt(document.getElementById('minCalories').value) || 0,
+                maxCalories: parseInt(document.getElementById('maxCalories').value) || 9999,
+                
+                // Macronutrients
+                minProtein: parseInt(document.getElementById('minProtein').value) || 0,
+                maxProtein: parseInt(document.getElementById('maxProtein').value) || 9999,
+                minCarbs: parseInt(document.getElementById('minCarbs').value) || 0,
+                maxCarbs: parseInt(document.getElementById('maxCarbs').value) || 9999,
+                minFat: parseInt(document.getElementById('minFat').value) || 0,
+                maxFat: parseInt(document.getElementById('maxFat').value) || 9999,
+                
+                // Vitamins
+                minVitaminA: parseInt(document.getElementById('minVitaminA').value) || 0,
+                maxVitaminA: parseInt(document.getElementById('maxVitaminA').value) || 9999,
+                minVitaminC: parseInt(document.getElementById('minVitaminC').value) || 0,
+                maxVitaminC: parseInt(document.getElementById('maxVitaminC').value) || 9999,
+                minVitaminD: parseInt(document.getElementById('minVitaminD').value) || 0,
+                maxVitaminD: parseInt(document.getElementById('maxVitaminD').value) || 9999,
+                minVitaminE: parseInt(document.getElementById('minVitaminE').value) || 0,
+                maxVitaminE: parseInt(document.getElementById('maxVitaminE').value) || 9999,
+                
+                // Minerals
+                minCalcium: parseInt(document.getElementById('minCalcium').value) || 0,
+                maxCalcium: parseInt(document.getElementById('maxCalcium').value) || 9999,
+                minIron: parseInt(document.getElementById('minIron').value) || 0,
+                maxIron: parseInt(document.getElementById('maxIron').value) || 9999,
+                minMagnesium: parseInt(document.getElementById('minMagnesium').value) || 0,
+                maxMagnesium: parseInt(document.getElementById('maxMagnesium').value) || 9999,
+                minPotassium: parseInt(document.getElementById('minPotassium').value) || 0,
+                maxPotassium: parseInt(document.getElementById('maxPotassium').value) || 9999,
+                minSodium: parseInt(document.getElementById('minSodium').value) || 0,
+                maxSodium: parseInt(document.getElementById('maxSodium').value) || 9999,
+            };
+
+            // Get selected objective and meal frequency
+            const objective = document.querySelector('input[name="objective"]:checked').value;
+            const mealFrequency = parseInt(document.getElementById('mealFrequency').value);
+
+            try {
+                const response = await fetch('/generate_meal_plan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ requirements, objective, mealFrequency })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayMealPlan(result.meal_plan, result.optimization_results);
+                } else {
+                    alert('Error generating meal plan: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error generating meal plan. Please try again.');
+            }
+        });
+
+
+        function displayMealPlan(mealPlan, optimizationResults = null) {
+            const resultsDiv = document.getElementById('mealPlanResults');
+            let html = '';
+
+            // Display optimization results if available
+            if (optimizationResults) {
+                html += `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-3">Optimization Results</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div class="bg-white p-3 rounded border">
+                                <div class="font-medium text-gray-800">Status</div>
+                                <div class="text-green-600 font-semibold">${optimizationResults.status}</div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="font-medium text-gray-800">Total Cost</div>
+                                <div class="text-green-600 font-semibold">$${optimizationResults.total_cost.toFixed(2)}</div>
+                            </div>
+                            <div class="bg-white p-3 rounded border">
+                                <div class="font-medium text-gray-800">Meals Selected</div>
+                                <div class="text-green-600 font-semibold">${optimizationResults.num_meals}</div>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-sm text-gray-600">
+                            <strong>Weekly Meal Overview:</strong>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-2">
+                                ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => {
+                                    const meals = mealPlan[day] || [];
+                                    return `<div class="bg-white p-2 rounded border">
+                                        <div class="font-medium text-gray-800">${day}</div>
+                                        <div class="text-gray-600">${meals.map(meal => meal.title).join(', ')}</div>
+                                    </div>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                        <div class="mt-3 text-sm text-gray-600">
+                            <strong>Average Nutrition per Meal:</strong>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
+                                <div>Calories: ${optimizationResults.nutritional_summary.calories?.average?.toFixed(1) || 'N/A'}</div>
+                                <div>Protein: ${optimizationResults.nutritional_summary.protein?.average?.toFixed(1) || 'N/A'}g</div>
+                                <div>Carbs: ${optimizationResults.nutritional_summary.carbs?.average?.toFixed(1) || 'N/A'}g</div>
+                                <div>Fat: ${optimizationResults.nutritional_summary.fat?.average?.toFixed(1) || 'N/A'}g</div>
+                                <div>Vitamin A: ${optimizationResults.nutritional_summary.vitamin_a_mcg?.average?.toFixed(1) || 'N/A'}mcg</div>
+                                <div>Vitamin C: ${optimizationResults.nutritional_summary.vitamin_c_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Vitamin D: ${optimizationResults.nutritional_summary.vitamin_d_mcg?.average?.toFixed(1) || 'N/A'}mcg</div>
+                                <div>Vitamin E: ${optimizationResults.nutritional_summary.vitamin_e_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Calcium: ${optimizationResults.nutritional_summary.calcium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Iron: ${optimizationResults.nutritional_summary.iron_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Magnesium: ${optimizationResults.nutritional_summary.magnesium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Potassium: ${optimizationResults.nutritional_summary.potassium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Sodium: ${optimizationResults.nutritional_summary.sodium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                                <div>Zinc: ${optimizationResults.nutritional_summary.zinc_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-md font-semibold text-gray-800">Nutrition Visualization</h4>
+                                <button onclick="openNormalizationModal()" class="text-sm text-blue-600 hover:text-blue-800 underline">
+                                    How is this calculated?
+                                </button>
+                            </div>
+                            <div class="bg-white p-4 rounded border">
+                                <canvas id="nutritionChart" width="400" height="500"></canvas>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">
+                                Chart shows normalized nutrient levels (0-100 scale) based on typical meal ranges. 
+                                <span class="text-green-600">Green</span> = optimal, 
+                                <span class="text-yellow-600">Yellow</span> = moderate, 
+                                <span class="text-red-600">Red</span> = low/high.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Use day order from config, fallback to default if not loaded
+            const dayOrder = appConfig.meal_planning?.days_of_week || ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            
+            // Display days in the specified order
+            dayOrder.forEach(day => {
+                const meals = mealPlan[day];
+                if (!meals) return;
+                // Calculate daily totals
+                let dailyTotals = {
+                    calories: 0,
+                    protein: 0,
+                    carbs: 0,
+                    fat: 0,
+                    cost: 0,
+                    vitaminA: 0,
+                    vitaminC: 0,
+                    calcium: 0,
+                    iron: 0,
+                    sodium: 0
+                };
+
+                html += `
+                    <div class="border border-gray-200 rounded-lg p-4 mb-4">
+                        <h3 class="font-semibold text-lg mb-3 text-black">${day}</h3>
+                        <div class="space-y-2">
+                `;
+                
+                // Display dinner meals directly (no meal type wrapper)
+                meals.forEach(meal => {
+                    const calories = meal.calories || 0;
+                    const protein = meal.macros?.protein || 0;
+                    const carbs = meal.macros?.carbs || 0;
+                    const fat = meal.macros?.fat || 0;
+                    const cost = meal.estimated_cost_usd || 0;
+                    const vitaminA = meal.micros?.vitamin_a_mcg || 0;
+                    const vitaminC = meal.micros?.vitamin_c_mg || 0;
+                    const calcium = meal.micros?.calcium_mg || 0;
+                    const iron = meal.micros?.iron_mg || 0;
+                    const sodium = meal.micros?.sodium_mg || 0;
+                    
+                    // Add to daily totals
+                    dailyTotals.calories += calories;
+                    dailyTotals.protein += protein;
+                    dailyTotals.carbs += carbs;
+                    dailyTotals.fat += fat;
+                    dailyTotals.cost += cost;
+                    dailyTotals.vitaminA += vitaminA;
+                    dailyTotals.vitaminC += vitaminC;
+                    dailyTotals.calcium += calcium;
+                    dailyTotals.iron += iron;
+                    dailyTotals.sodium += sodium;
+                    
+                    html += `
+                        <div class="bg-white border border-gray-300 rounded-lg p-3">
+                            <div class="font-medium text-sm text-black mb-1">${meal.title || meal.name}</div>
+                            <div class="text-xs text-gray-600 space-y-1">
+                                <div>${calories} cal • ${protein}g protein • ${carbs}g carbs • ${fat}g fat</div>
+                                <div>$${cost.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Add daily summary
+                html += `
+                        </div>
+                        <div class="mt-4 p-3 bg-gray-100 rounded-lg">
+                            <h5 class="font-medium text-sm text-gray-800 mb-2">Dinner Summary</h5>
+                            <div class="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                                <div>Total Calories: ${dailyTotals.calories}</div>
+                                <div>Total Cost: $${dailyTotals.cost.toFixed(2)}</div>
+                                <div>Protein: ${dailyTotals.protein}g</div>
+                                <div>Carbs: ${dailyTotals.carbs}g</div>
+                                <div>Fat: ${dailyTotals.fat}g</div>
+                                <div>Vitamin A: ${dailyTotals.vitaminA}mcg</div>
+                                <div>Vitamin C: ${dailyTotals.vitaminC}mg</div>
+                                <div>Calcium: ${dailyTotals.calcium}mg</div>
+                                <div>Iron: ${dailyTotals.iron}mg</div>
+                                <div>Sodium: ${dailyTotals.sodium}mg</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsDiv.innerHTML = html;
+            
+            // Create nutrition chart if optimization results are available
+            if (optimizationResults) {
+                createNutritionChart(optimizationResults);
+            }
+            
+            // Scroll to meal plan section
+            document.getElementById('plan').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Create horizontal bar chart for nutrition visualization
+        function createNutritionChart(optimizationResults) {
+            const ctx = document.getElementById('nutritionChart').getContext('2d');
+            
+            // Define all nutrient categories with their typical ranges for normalization
+            // Map to the actual field names from optimization results
+            const nutrientCategories = {
+                'Calories': { value: optimizationResults.nutritional_summary.calories?.average || 0, range: [100, 800], unit: 'cal' },
+                'Protein': { value: optimizationResults.nutritional_summary.protein?.average || 0, range: [5, 40], unit: 'g' },
+                'Carbs': { value: optimizationResults.nutritional_summary.carbs?.average || 0, range: [10, 80], unit: 'g' },
+                'Fat': { value: optimizationResults.nutritional_summary.fat?.average || 0, range: [2, 30], unit: 'g' },
+                'Vitamin A': { value: optimizationResults.nutritional_summary.vitamin_a_mcg?.average || 0, range: [50, 400], unit: 'mcg' },
+                'Vitamin C': { value: optimizationResults.nutritional_summary.vitamin_c_mg?.average || 0, range: [0, 50], unit: 'mg' },
+                'Vitamin D': { value: optimizationResults.nutritional_summary.vitamin_d_mcg?.average || 0, range: [0, 15], unit: 'mcg' },
+                'Vitamin E': { value: optimizationResults.nutritional_summary.vitamin_e_mg?.average || 0, range: [0.5, 5], unit: 'mg' },
+                'Calcium': { value: optimizationResults.nutritional_summary.calcium_mg?.average || 0, range: [50, 300], unit: 'mg' },
+                'Iron': { value: optimizationResults.nutritional_summary.iron_mg?.average || 0, range: [1, 5], unit: 'mg' },
+                'Magnesium': { value: optimizationResults.nutritional_summary.magnesium_mg?.average || 0, range: [20, 100], unit: 'mg' },
+                'Potassium': { value: optimizationResults.nutritional_summary.potassium_mg?.average || 0, range: [150, 800], unit: 'mg' },
+                'Sodium': { value: optimizationResults.nutritional_summary.sodium_mg?.average || 0, range: [200, 1000], unit: 'mg' },
+                'Zinc': { value: optimizationResults.nutritional_summary.zinc_mg?.average || 0, range: [0.5, 10], unit: 'mg' }
+            };
+
+            // Normalize values to 0-100 scale for meaningful comparison
+            const labels = [];
+            const normalizedValues = [];
+            const originalValues = [];
+            const colors = [];
+
+            Object.entries(nutrientCategories).forEach(([name, data]) => {
+                labels.push(name);
+                originalValues.push(data.value.toFixed(1) + data.unit);
+                
+                // Normalize to 0-100 scale based on typical range
+                const [min, max] = data.range;
+                const normalized = Math.min(100, Math.max(0, ((data.value - min) / (max - min)) * 100));
+                normalizedValues.push(normalized);
+                
+                // Color based on how close to optimal range (green = good, yellow = moderate, red = high)
+                if (normalized >= 20 && normalized <= 80) {
+                    colors.push('#10b981'); // Green for good range
+                } else if (normalized >= 10 && normalized <= 90) {
+                    colors.push('#f59e0b'); // Yellow for moderate
+                } else {
+                    colors.push('#ef4444'); // Red for extreme values
+                }
+            });
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Normalized Nutrient Levels (0-100 scale)',
+                        data: normalizedValues,
+                        backgroundColor: colors,
+                        borderColor: colors,
+                        borderWidth: 1,
+                        barThickness: 8, // Much narrower bars
+                        maxBarThickness: 10
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal bars
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    return `${labels[index]}: ${originalValues[index]} (${normalizedValues[index].toFixed(1)}% of typical range)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Normalized Level (0-100)'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Nutrients'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            top: 10,
+                            bottom: 10,
+                            left: 5,
+                            right: 5
+                        }
+                    }
+                }
+            });
+        }
+
+
+
+        // Global variables for loaded data
+        let nutritionalProfiles = {};
+        let appConfig = {};
+
+        // Profile chip selection functionality
+        function setupProfileChips() {
+            const profileChips = document.querySelectorAll('.profile-chip');
+            console.log('Found profile chips:', profileChips.length);
+            
+            profileChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    console.log('Profile chip clicked:', this);
+                    // Remove active state from all chips
+                    profileChips.forEach(c => {
+                        c.classList.remove('bg-black', 'text-white');
+                        c.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    
+                    // Add active state to clicked chip
+                    this.classList.remove('bg-gray-100', 'text-gray-700');
+                    this.classList.add('bg-black', 'text-white');
+                    
+                    // Get profile data and populate form
+                    const profile = this.getAttribute('data-profile');
+                    console.log('Selected profile:', profile);
+                    populateNutritionalValues(profile);
+                });
+            });
+        }
+
+        // Populate nutritional values based on selected profile
+        function populateNutritionalValues(profile) {
+            console.log('Populating profile:', profile);
+            console.log('Available profiles:', Object.keys(nutritionalProfiles));
+            const profileData = nutritionalProfiles[profile];
+            if (!profileData) {
+                console.error('Profile not found:', profile);
+                return;
+            }
+            console.log('Profile data:', profileData);
+
+            // Map of input IDs to profile data keys
+            const inputMapping = {
+                'minCalories': 'calories.min',
+                'maxCalories': 'calories.max',
+                'minProtein': 'protein.min',
+                'maxProtein': 'protein.max',
+                'minCarbs': 'carbs.min',
+                'maxCarbs': 'carbs.max',
+                'minFat': 'fat.min',
+                'maxFat': 'fat.max',
+                'minVitaminA': 'vitaminA.min',
+                'maxVitaminA': 'vitaminA.max',
+                'minVitaminC': 'vitaminC.min',
+                'maxVitaminC': 'vitaminC.max',
+                'minVitaminD': 'vitaminD.min',
+                'maxVitaminD': 'vitaminD.max',
+                'minVitaminE': 'vitaminE.min',
+                'maxVitaminE': 'vitaminE.max',
+                'minCalcium': 'calcium.min',
+                'maxCalcium': 'calcium.max',
+                'minIron': 'iron.min',
+                'maxIron': 'iron.max',
+                'minMagnesium': 'magnesium.min',
+                'maxMagnesium': 'magnesium.max',
+                'minPotassium': 'potassium.min',
+                'maxPotassium': 'potassium.max',
+                'minSodium': 'sodium.min',
+                'maxSodium': 'sodium.max',
+            };
+
+            // Populate all input fields
+            Object.entries(inputMapping).forEach(([inputId, dataPath]) => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    const [category, type] = dataPath.split('.');
+                    const value = profileData[category][type];
+                    input.value = value;
+                    console.log(`Setting ${inputId} to ${value}`);
+                } else {
+                    console.error(`Input field not found: ${inputId}`);
+                }
+            });
+        }
+
+        // Load nutritional profiles from server
+        async function loadNutritionalProfiles() {
+            try {
+                const response = await fetch('/get_nutritional_profiles');
+                const data = await response.json();
+                if (data.success) {
+                    nutritionalProfiles = data.profiles;
+                    console.log('Nutritional profiles loaded:', nutritionalProfiles);
+                    console.log('Profile keys:', Object.keys(nutritionalProfiles));
+                } else {
+                    console.error('Error loading nutritional profiles:', data.error);
+                    alert('Error loading nutritional profiles: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error loading nutritional profiles:', error);
+                alert('Error loading nutritional profiles: ' + error.message);
+            }
+        }
+
+        // Load app configuration from server
+        async function loadAppConfig() {
+            try {
+                const response = await fetch('/get_config');
+                const data = await response.json();
+                if (data.success) {
+                    appConfig = data.config;
+                    console.log('App config loaded:', appConfig);
+                } else {
+                    console.error('Error loading app config:', data.error);
+                }
+            } catch (error) {
+                console.error('Error loading app config:', error);
+            }
+        }
+
+
+        // Load app data when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadAppConfig();
+            await loadNutritionalProfiles();
+            setupProfileChips();
+            // Auto-select Healthy Adult profile
+            populateNutritionalValues('healthy-adult');
+        });
+
+        // Modal functions for normalization explanation
+        function openNormalizationModal() {
+            document.getElementById('normalizationModal').classList.remove('hidden');
+        }
+
+        function closeNormalizationModal() {
+            document.getElementById('normalizationModal').classList.add('hidden');
+        }
+    </script>
+
+    <!-- Normalization Explanation Modal -->
+    <div id="normalizationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">How Nutrition Normalization Works</h3>
+                        <button onclick="closeNormalizationModal()" class="text-gray-500 hover:text-gray-700 text-xl">&times;</button>
+                    </div>
+                    
+                    <div class="space-y-4 text-sm text-gray-700">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">What is Normalization?</h4>
+                            <p>Since different nutrients have vastly different scales (calories in hundreds, vitamins in micrograms), we normalize all values to a 0-100 scale for meaningful comparison.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">How it Works:</h4>
+                            <div class="bg-white p-3 rounded text-xs font-mono border">
+                                Normalized Value = ((Actual Value - Minimum) / (Maximum - Minimum)) × 100
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Example:</h4>
+                            <p>If a meal has 191 calories and the typical range is 100-800 calories:</p>
+                            <div class="bg-white p-3 rounded text-xs font-mono border">
+                                ((191 - 100) / (800 - 100)) × 100 = 13.1%
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Color Coding:</h4>
+                            <ul class="space-y-1">
+                                <li><span class="text-green-600 font-semibold">Green (20-80%):</span> Optimal range - nutrient levels are well-balanced</li>
+                                <li><span class="text-yellow-600 font-semibold">Yellow (10-90%):</span> Moderate - acceptable but could be improved</li>
+                                <li><span class="text-red-600 font-semibold">Red (0-10% or 90-100%):</span> Low or high - may need attention</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Typical Ranges Used:</h4>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div><strong>Calories:</strong> 100-800 cal</div>
+                                <div><strong>Protein:</strong> 5-40g</div>
+                                <div><strong>Carbs:</strong> 10-80g</div>
+                                <div><strong>Fat:</strong> 2-30g</div>
+                                <div><strong>Vitamin A:</strong> 50-400mcg</div>
+                                <div><strong>Vitamin C:</strong> 0-50mg</div>
+                                <div><strong>Vitamin D:</strong> 0-15mcg</div>
+                                <div><strong>Vitamin E:</strong> 0.5-5mg</div>
+                                <div><strong>Calcium:</strong> 50-300mg</div>
+                                <div><strong>Iron:</strong> 1-5mg</div>
+                                <div><strong>Magnesium:</strong> 20-100mg</div>
+                                <div><strong>Potassium:</strong> 150-800mg</div>
+                                <div><strong>Sodium:</strong> 200-1000mg</div>
+                                <div><strong>Zinc:</strong> 0.5-10mg</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-3 rounded">
+                            <p class="text-blue-800"><strong>Note:</strong> These ranges are based on typical single meal values. The goal is to show relative nutrient density and balance across your selected meals.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="closeNormalizationModal()" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                            Got it
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

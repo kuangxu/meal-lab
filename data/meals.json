@@ -1,0 +1,1202 @@
+[
+  {
+    "title": "Classic Italian Margherita Pizza",
+    "description": "Thin crust topped with fresh tomato sauce, mozzarella cheese, and basil leaves. A simple yet flavorful vegetarian pizza from Italy perfect for sharing.",
+    "estimated_cost_usd": 8.0,
+    "calories": 250,
+    "macros": {
+      "protein": 10,
+      "carbs": 30,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 200,
+      "iron_mg": 1.5,
+      "magnesium_mg": 20,
+      "potassium_mg": 250,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 9
+  },
+  {
+    "title": "Fresh Mexican Guacamole with Chips",
+    "description": "Creamy mashed avocados mixed with lime, onion, and cilantro served with tortilla chips. A zesty vegetarian appetizer from Mexico ideal for snacking.",
+    "estimated_cost_usd": 6.0,
+    "calories": 400,
+    "macros": {
+      "protein": 5,
+      "carbs": 40,
+      "fat": 25
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 3,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 50,
+      "potassium_mg": 800,
+      "sodium_mg": 300,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Spicy Indian Chana Masala Curry",
+    "description": "Chickpeas simmered in a tomato-onion gravy with aromatic spices. A hearty vegetarian dish from India often served with rice or bread.",
+    "estimated_cost_usd": 5.0,
+    "calories": 200,
+    "macros": {
+      "protein": 8,
+      "carbs": 25,
+      "fat": 8
+    },
+    "micros": {
+      "vitamin_a_mcg": 150,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 80,
+      "iron_mg": 3,
+      "magnesium_mg": 50,
+      "potassium_mg": 400,
+      "sodium_mg": 300,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Chinese Vegetable Fried Rice Bowl",
+    "description": "Stir-fried rice mixed with colorful vegetables and soy sauce. A quick and light vegetarian meal from China customizable with additions.",
+    "estimated_cost_usd": 6.0,
+    "calories": 250,
+    "macros": {
+      "protein": 5,
+      "carbs": 45,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 300,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 30,
+      "potassium_mg": 300,
+      "sodium_mg": 600,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Traditional Japanese Miso Soup",
+    "description": "Savory soybean paste broth with tofu cubes and seaweed. A light vegetarian starter from Japan known for its umami taste.",
+    "estimated_cost_usd": 4.0,
+    "calories": 70,
+    "macros": {
+      "protein": 6,
+      "carbs": 6,
+      "fat": 2
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 0.5,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 20,
+      "potassium_mg": 150,
+      "sodium_mg": 800,
+      "zinc_mg": 0.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Greek Spinach Feta Spanakopita",
+    "description": "Flaky phyllo pastry filled with spinach and feta cheese. A savory vegetarian pie from Greece often enjoyed as a snack.",
+    "estimated_cost_usd": 7.0,
+    "calories": 300,
+    "macros": {
+      "protein": 8,
+      "carbs": 25,
+      "fat": 18
+    },
+    "micros": {
+      "vitamin_a_mcg": 500,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 150,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 300,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Creamy American Mac and Cheese",
+    "description": "Elbow pasta in rich cheddar cheese sauce baked until bubbly. A classic vegetarian comfort food from America loved by all ages.",
+    "estimated_cost_usd": 5.0,
+    "calories": 400,
+    "macros": {
+      "protein": 15,
+      "carbs": 50,
+      "fat": 20
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 0,
+      "vitamin_d_mcg": 1,
+      "vitamin_e_mg": 0.5,
+      "calcium_mg": 300,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 200,
+      "sodium_mg": 600,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Classic French Onion Soup",
+    "description": "Caramelized onions in savory broth topped with cheese toast. A warming soup from France with deep umami flavors.",
+    "estimated_cost_usd": 6.0,
+    "calories": 300,
+    "macros": {
+      "protein": 10,
+      "carbs": 30,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 200,
+      "iron_mg": 1,
+      "magnesium_mg": 20,
+      "potassium_mg": 300,
+      "sodium_mg": 800,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Spicy Thai Tom Yum Soup",
+    "description": "Aromatic lemongrass broth with shrimp, mushrooms, and chili. A bold Thai soup balancing sour, spicy, and savory notes.",
+    "estimated_cost_usd": 7.0,
+    "calories": 150,
+    "macros": {
+      "protein": 10,
+      "carbs": 10,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 30,
+      "potassium_mg": 300,
+      "sodium_mg": 700,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "African Fufu with Peanut Stew",
+    "description": "Smooth cassava dough paired with rich peanut and vegetable stew. A filling vegetarian meal from West Africa with nutty flavors.",
+    "estimated_cost_usd": 6.0,
+    "calories": 400,
+    "macros": {
+      "protein": 10,
+      "carbs": 60,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 3,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 60,
+      "potassium_mg": 500,
+      "sodium_mg": 400,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Korean Bibimbap with Beef",
+    "description": "Mixed rice bowl with seasoned beef, vegetables, and fried egg. A colorful Korean dish offering a variety of textures and flavors.",
+    "estimated_cost_usd": 10.0,
+    "calories": 500,
+    "macros": {
+      "protein": 25,
+      "carbs": 60,
+      "fat": 20
+    },
+    "micros": {
+      "vitamin_a_mcg": 400,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 1,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 100,
+      "iron_mg": 4,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 800,
+      "zinc_mg": 5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Chilled Spanish Gazpacho Soup",
+    "description": "Blended raw vegetables with tomato base served cold. A refreshing vegetarian soup from Spain ideal for hot days.",
+    "estimated_cost_usd": 5.0,
+    "calories": 100,
+    "macros": {
+      "protein": 3,
+      "carbs": 15,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 300,
+      "vitamin_c_mg": 50,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 30,
+      "potassium_mg": 500,
+      "sodium_mg": 300,
+      "zinc_mg": 0.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Lebanese Hummus with Pita Bread",
+    "description": "Creamy chickpea dip served with warm pita wedges. A staple Middle Eastern appetizer that's smooth and garlicky.",
+    "estimated_cost_usd": 5.0,
+    "calories": 300,
+    "macros": {
+      "protein": 8,
+      "carbs": 40,
+      "fat": 12
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 200,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Vietnamese Pho with Beef Slices",
+    "description": "Aromatic beef broth with rice noodles and tender meat. A fragrant Vietnamese soup garnished with herbs and lime.",
+    "estimated_cost_usd": 9.0,
+    "calories": 400,
+    "macros": {
+      "protein": 25,
+      "carbs": 50,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 3,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 1200,
+      "zinc_mg": 4
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Brazilian Feijoada with Pork",
+    "description": "Black bean stew with pork sausages and smoked meats. A robust Brazilian dish traditionally served with rice.",
+    "estimated_cost_usd": 8.0,
+    "calories": 450,
+    "macros": {
+      "protein": 25,
+      "carbs": 40,
+      "fat": 20
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 100,
+      "iron_mg": 4,
+      "magnesium_mg": 80,
+      "potassium_mg": 600,
+      "sodium_mg": 800,
+      "zinc_mg": 3
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Moroccan Vegetable Tagine Stew",
+    "description": "Slow-cooked vegetables with spices in earthenware pot. A flavorful vegetarian tagine from Morocco served with couscous.",
+    "estimated_cost_usd": 7.0,
+    "calories": 300,
+    "macros": {
+      "protein": 10,
+      "carbs": 50,
+      "fat": 8
+    },
+    "micros": {
+      "vitamin_a_mcg": 400,
+      "vitamin_c_mg": 30,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 100,
+      "iron_mg": 3,
+      "magnesium_mg": 60,
+      "potassium_mg": 700,
+      "sodium_mg": 400,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Russian Beef Stroganoff with Noodles",
+    "description": "Tender beef strips in creamy mushroom sauce over pasta. A classic Russian dish that's rich and comforting.",
+    "estimated_cost_usd": 10.0,
+    "calories": 500,
+    "macros": {
+      "protein": 30,
+      "carbs": 40,
+      "fat": 25
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 150,
+      "iron_mg": 4,
+      "magnesium_mg": 50,
+      "potassium_mg": 500,
+      "sodium_mg": 600,
+      "zinc_mg": 5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Grilled Turkish Lamb Kebab Skewers",
+    "description": "Marinated lamb pieces grilled on skewers with vegetables. A smoky Turkish dish often served with yogurt sauce.",
+    "estimated_cost_usd": 12.0,
+    "calories": 400,
+    "macros": {
+      "protein": 30,
+      "carbs": 10,
+      "fat": 25
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 4,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 500,
+      "zinc_mg": 5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Ethiopian Lentil Stew with Injera",
+    "description": "Spicy red lentil stew served with fermented teff flatbread. A vegetarian Ethiopian meal full of bold spices.",
+    "estimated_cost_usd": 6.0,
+    "calories": 350,
+    "macros": {
+      "protein": 15,
+      "carbs": 60,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 100,
+      "iron_mg": 5,
+      "magnesium_mg": 80,
+      "potassium_mg": 600,
+      "sodium_mg": 400,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Fresh Peruvian Fish Ceviche",
+    "description": "Raw fish marinated in lime juice with onions and chili. A zesty Peruvian appetizer served with corn and sweet potato.",
+    "estimated_cost_usd": 10.0,
+    "calories": 200,
+    "macros": {
+      "protein": 25,
+      "carbs": 15,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 50,
+      "vitamin_d_mcg": 5,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 50,
+      "potassium_mg": 500,
+      "sodium_mg": 300,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Savory Australian Meat Pie",
+    "description": "Flaky pastry filled with minced beef and gravy. A handheld Australian snack often enjoyed at sporting events.",
+    "estimated_cost_usd": 7.0,
+    "calories": 500,
+    "macros": {
+      "protein": 20,
+      "carbs": 40,
+      "fat": 30
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 3,
+      "magnesium_mg": 40,
+      "potassium_mg": 300,
+      "sodium_mg": 600,
+      "zinc_mg": 4
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Cheesy Canadian Poutine Fries",
+    "description": "French fries topped with cheese curds and gravy. A indulgent Canadian dish that's crispy and gooey.",
+    "estimated_cost_usd": 6.0,
+    "calories": 600,
+    "macros": {
+      "protein": 15,
+      "carbs": 60,
+      "fat": 35
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 300,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 800,
+      "sodium_mg": 1000,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "German Pork Schnitzel with Potatoes",
+    "description": "Breaded pork cutlet fried until golden served with boiled potatoes. A hearty German meal with crispy texture.",
+    "estimated_cost_usd": 9.0,
+    "calories": 500,
+    "macros": {
+      "protein": 30,
+      "carbs": 40,
+      "fat": 25
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 3,
+      "magnesium_mg": 60,
+      "potassium_mg": 800,
+      "sodium_mg": 600,
+      "zinc_mg": 4
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Traditional Polish Potato Pierogi",
+    "description": "Dumplings filled with mashed potatoes and cheese, boiled or fried. A comforting Polish dish often served with sour cream.",
+    "estimated_cost_usd": 5.0,
+    "calories": 300,
+    "macros": {
+      "protein": 10,
+      "carbs": 45,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 100,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Swedish Meatballs with Lingonberry Sauce",
+    "description": "Beef and pork meatballs in creamy gravy with berry jam. A iconic Swedish dish served with mashed potatoes.",
+    "estimated_cost_usd": 10.0,
+    "calories": 500,
+    "macros": {
+      "protein": 25,
+      "carbs": 40,
+      "fat": 30
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 150,
+      "iron_mg": 3,
+      "magnesium_mg": 50,
+      "potassium_mg": 500,
+      "sodium_mg": 700,
+      "zinc_mg": 4
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Spicy Caribbean Jerk Chicken",
+    "description": "Grilled chicken marinated in jerk spices and scotch bonnet peppers. A fiery Caribbean dish served with rice and peas.",
+    "estimated_cost_usd": 8.0,
+    "calories": 400,
+    "macros": {
+      "protein": 35,
+      "carbs": 30,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 500,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Middle Eastern Falafel Wrap",
+    "description": "Crispy chickpea patties wrapped in pita with tahini and veggies. A popular vegetarian street food from the Middle East.",
+    "estimated_cost_usd": 6.0,
+    "calories": 350,
+    "macros": {
+      "protein": 10,
+      "carbs": 50,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 100,
+      "iron_mg": 3,
+      "magnesium_mg": 60,
+      "potassium_mg": 400,
+      "sodium_mg": 500,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Grilled Argentine Asado Beef",
+    "description": "Slow-grilled beef ribs seasoned with chimichurri sauce. A traditional Argentine barbecue meat full of smoky flavor.",
+    "estimated_cost_usd": 12.0,
+    "calories": 600,
+    "macros": {
+      "protein": 40,
+      "carbs": 5,
+      "fat": 50
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 5,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 400,
+      "zinc_mg": 6
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Egyptian Koshari Rice and Lentils",
+    "description": "Layered rice, lentils, pasta with tomato sauce and onions. A hearty vegetarian street food from Egypt.",
+    "estimated_cost_usd": 5.0,
+    "calories": 500,
+    "macros": {
+      "protein": 15,
+      "carbs": 90,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 100,
+      "iron_mg": 4,
+      "magnesium_mg": 80,
+      "potassium_mg": 600,
+      "sodium_mg": 500,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Filipino Chicken Adobo Stew",
+    "description": "Chicken simmered in soy sauce, vinegar, and garlic. A tangy Filipino dish often served with steamed rice.",
+    "estimated_cost_usd": 7.0,
+    "calories": 300,
+    "macros": {
+      "protein": 25,
+      "carbs": 10,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 800,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Malaysian Nasi Lemak with Fish",
+    "description": "Coconut rice served with sambal, anchovies, and boiled egg. A fragrant Malaysian dish with a spicy kick.",
+    "estimated_cost_usd": 7.0,
+    "calories": 400,
+    "macros": {
+      "protein": 15,
+      "carbs": 50,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 2,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 80,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 400,
+      "sodium_mg": 600,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Indian Palak Paneer with Naan",
+    "description": "Creamy spinach curry with soft paneer cubes, paired with naan. A vegetarian North Indian dish rich in flavor.",
+    "estimated_cost_usd": 6.0,
+    "calories": 350,
+    "macros": {
+      "protein": 12,
+      "carbs": 40,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 600,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 200,
+      "iron_mg": 3,
+      "magnesium_mg": 60,
+      "potassium_mg": 500,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Jamaican Ackee and Saltfish",
+    "description": "Saut\u00e9ed ackee fruit with salted cod and onions. A vibrant Jamaican breakfast dish served with plantains.",
+    "estimated_cost_usd": 8.0,
+    "calories": 300,
+    "macros": {
+      "protein": 20,
+      "carbs": 20,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 150,
+      "vitamin_c_mg": 30,
+      "vitamin_d_mcg": 3,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 100,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 900,
+      "zinc_mg": 2
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Italian Eggplant Parmesan Bake",
+    "description": "Breaded eggplant slices layered with marinara and mozzarella, baked until golden. A vegetarian Italian classic with rich flavors.",
+    "estimated_cost_usd": 7.0,
+    "calories": 350,
+    "macros": {
+      "protein": 15,
+      "carbs": 30,
+      "fat": 20
+    },
+    "micros": {
+      "vitamin_a_mcg": 300,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 250,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 500,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Vietnamese Vegetarian Spring Rolls",
+    "description": "Fresh rice paper rolls filled with tofu, vermicelli, and vegetables. A light Vietnamese appetizer served with peanut sauce.",
+    "estimated_cost_usd": 5.0,
+    "calories": 150,
+    "macros": {
+      "protein": 6,
+      "carbs": 20,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 25,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 30,
+      "potassium_mg": 300,
+      "sodium_mg": 400,
+      "zinc_mg": 0.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Norwegian Baked Salmon with Dill",
+    "description": "Salmon fillet baked with dill and lemon, served with potatoes. A simple Norwegian dish highlighting fresh fish.",
+    "estimated_cost_usd": 10.0,
+    "calories": 350,
+    "macros": {
+      "protein": 25,
+      "carbs": 20,
+      "fat": 20
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 15,
+      "vitamin_e_mg": 3,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 300,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Sri Lankan Coconut Dhal Curry",
+    "description": "Red lentils cooked in coconut milk with turmeric and spices. A creamy vegetarian Sri Lankan dish served with rice.",
+    "estimated_cost_usd": 5.0,
+    "calories": 250,
+    "macros": {
+      "protein": 10,
+      "carbs": 30,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 3,
+      "magnesium_mg": 60,
+      "potassium_mg": 400,
+      "sodium_mg": 300,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Mexican Grilled Corn Elote",
+    "description": "Charred corn on the cob slathered with mayo, cheese, and chili. A vegetarian Mexican street food with bold flavors.",
+    "estimated_cost_usd": 4.0,
+    "calories": 200,
+    "macros": {
+      "protein": 5,
+      "carbs": 25,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 100,
+      "iron_mg": 1,
+      "magnesium_mg": 40,
+      "potassium_mg": 300,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Tunisian Shakshuka with Eggs",
+    "description": "Poached eggs in a spicy tomato and pepper sauce. A vegetarian Tunisian breakfast dish served with bread.",
+    "estimated_cost_usd": 6.0,
+    "calories": 200,
+    "macros": {
+      "protein": 10,
+      "carbs": 15,
+      "fat": 10
+    },
+    "micros": {
+      "vitamin_a_mcg": 400,
+      "vitamin_c_mg": 40,
+      "vitamin_d_mcg": 1,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 80,
+      "iron_mg": 2,
+      "magnesium_mg": 30,
+      "potassium_mg": 500,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Japanese Tempura Vegetable Platter",
+    "description": "Lightly battered and fried vegetables like sweet potato and zucchini. A crispy vegetarian Japanese dish served with dipping sauce.",
+    "estimated_cost_usd": 6.0,
+    "calories": 300,
+    "macros": {
+      "protein": 5,
+      "carbs": 40,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 300,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 500,
+      "zinc_mg": 0.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Portuguese Grilled Sardines Plate",
+    "description": "Fresh sardines grilled with olive oil and lemon, served with potatoes. A simple yet flavorful Portuguese seafood dish.",
+    "estimated_cost_usd": 8.0,
+    "calories": 300,
+    "macros": {
+      "protein": 25,
+      "carbs": 15,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 10,
+      "vitamin_d_mcg": 10,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 200,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 500,
+      "sodium_mg": 400,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Indonesian Tempeh Satay Skewers",
+    "description": "Marinated tempeh grilled on skewers with peanut sauce. A vegan Indonesian dish with nutty and savory flavors.",
+    "estimated_cost_usd": 5.0,
+    "calories": 250,
+    "macros": {
+      "protein": 15,
+      "carbs": 20,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 100,
+      "iron_mg": 2,
+      "magnesium_mg": 60,
+      "potassium_mg": 400,
+      "sodium_mg": 500,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Greek Lentil Soup Fakes",
+    "description": "Hearty lentil soup with tomatoes, carrots, and olive oil. A vegetarian Greek dish that's warming and nutritious.",
+    "estimated_cost_usd": 4.0,
+    "calories": 200,
+    "macros": {
+      "protein": 10,
+      "carbs": 30,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 3,
+      "magnesium_mg": 50,
+      "potassium_mg": 500,
+      "sodium_mg": 300,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Chilean Avocado Reina Salad",
+    "description": "Mashed avocado stuffed with tuna and served with salad. A refreshing Chilean dish perfect for light meals.",
+    "estimated_cost_usd": 7.0,
+    "calories": 300,
+    "macros": {
+      "protein": 15,
+      "carbs": 10,
+      "fat": 20
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 5,
+      "vitamin_e_mg": 3,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Thai Green Papaya Salad",
+    "description": "Shredded papaya tossed with lime, chili, and peanuts. A spicy vegetarian Thai salad with a crunchy texture.",
+    "estimated_cost_usd": 5.0,
+    "calories": 150,
+    "macros": {
+      "protein": 5,
+      "carbs": 20,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 300,
+      "vitamin_c_mg": 50,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 30,
+      "potassium_mg": 400,
+      "sodium_mg": 500,
+      "zinc_mg": 0.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Indian Aloo Gobi Curry",
+    "description": "Cauliflower and potatoes cooked with turmeric and spices. A vegan Indian dish served with rice or flatbread.",
+    "estimated_cost_usd": 5.0,
+    "calories": 200,
+    "macros": {
+      "protein": 5,
+      "carbs": 30,
+      "fat": 8
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 40,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 600,
+      "sodium_mg": 300,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Icelandic Cod with Rye Bread",
+    "description": "Pan-seared cod served with butter and dense rye bread. A traditional Icelandic dish highlighting fresh seafood.",
+    "estimated_cost_usd": 9.0,
+    "calories": 350,
+    "macros": {
+      "protein": 30,
+      "carbs": 20,
+      "fat": 15
+    },
+    "micros": {
+      "vitamin_a_mcg": 50,
+      "vitamin_c_mg": 5,
+      "vitamin_d_mcg": 10,
+      "vitamin_e_mg": 2,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 50,
+      "potassium_mg": 600,
+      "sodium_mg": 400,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Nepalese Vegetable Momo Dumplings",
+    "description": "Steamed dumplings filled with spiced vegetables, served with chutney. A vegetarian Nepalese snack with bold flavors.",
+    "estimated_cost_usd": 5.0,
+    "calories": 200,
+    "macros": {
+      "protein": 5,
+      "carbs": 30,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 150,
+      "vitamin_c_mg": 15,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 50,
+      "iron_mg": 1,
+      "magnesium_mg": 30,
+      "potassium_mg": 300,
+      "sodium_mg": 400,
+      "zinc_mg": 0.5
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Korean Tofu Kimchi Stew",
+    "description": "Spicy fermented cabbage and tofu in a savory broth. A vegetarian Korean dish that's warming and tangy.",
+    "estimated_cost_usd": 6.0,
+    "calories": 150,
+    "macros": {
+      "protein": 10,
+      "carbs": 15,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 200,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 150,
+      "iron_mg": 2,
+      "magnesium_mg": 40,
+      "potassium_mg": 400,
+      "sodium_mg": 700,
+      "zinc_mg": 1
+    },
+    "user_rating": 5
+  },
+  {
+    "title": "Cuban Black Bean Soup",
+    "description": "Hearty black beans simmered with onions and bell peppers. A vegetarian Cuban dish served with rice or bread.",
+    "estimated_cost_usd": 5.0,
+    "calories": 250,
+    "macros": {
+      "protein": 10,
+      "carbs": 40,
+      "fat": 5
+    },
+    "micros": {
+      "vitamin_a_mcg": 100,
+      "vitamin_c_mg": 20,
+      "vitamin_d_mcg": 0,
+      "vitamin_e_mg": 1,
+      "calcium_mg": 80,
+      "iron_mg": 3,
+      "magnesium_mg": 60,
+      "potassium_mg": 500,
+      "sodium_mg": 400,
+      "zinc_mg": 1.5
+    },
+    "user_rating": 5
+  }
+]

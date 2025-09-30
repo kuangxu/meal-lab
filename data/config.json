@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Meal Lab",
+    "description": "Plan your weekly dinners based on nutritional requirements",
+    "port": 5001
+  },
+  "meal_planning": {
+    "days_of_week": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "meals_per_day": {
+      "min": 1,
+      "max": 2
+    },
+    "default_meals_file": "meals.json"
+  },
+  "ui": {
+    "max_width": "max-w-4xl",
+    "chart_colors": {
+      "primary": "rgb(75, 192, 192)",
+      "secondary": "rgb(255, 99, 132)",
+      "tertiary": "rgb(54, 162, 235)",
+      "quaternary": "rgb(255, 205, 86)",
+      "quinary": "rgb(153, 102, 255)"
+    }
+  },
+  "nutritional_guidelines": {
+    "source": "USDA",
+    "description": "Values represent recommended average per meal based on USDA guidelines",
+    "profiles_file": "nutritional_profiles.json"
+  }
+}

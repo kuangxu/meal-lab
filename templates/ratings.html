@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Meals - Meal Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-gray': '#f8f9fa',
+                        'custom-dark': '#212529'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-black min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-black text-white py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-bold">Meal Lab</div>
+            <div class="space-x-6">
+                <a href="/" class="hover:text-gray-300 transition-colors">Home</a>
+                <a href="/ratings" class="hover:text-gray-300 transition-colors text-gray-300">Rate Meals</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-black mb-4">Rate Meals</h1>
+            <p class="text-gray-600 text-lg">Rate your favorite meals and rank them by price and rating</p>
+        </header>
+
+        <!-- Reset Button -->
+        <div class="max-w-6xl mx-auto mb-8">
+            <div class="flex justify-end">
+                <button id="resetRatingsBtn" 
+                        class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors duration-200 font-medium">
+                    Reset All Ratings
+                </button>
+            </div>
+        </div>
+
+        <!-- Meals Table -->
+        <div class="max-w-6xl mx-auto">
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('name')">
+                                    Meal <span id="name-sort">↕</span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('rating')">
+                                    Rating <span id="rating-sort">↕</span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('price')">
+                                    Price <span id="price-sort">↕</span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('calories')">
+                                    Calories <span id="calories-sort">↕</span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('protein')">
+                                    Protein <span id="protein-sort">↕</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="mealsTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Meals will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading indicator -->
+        <div id="loadingIndicator" class="text-center py-8">
+            <div class="text-gray-500">Loading meals...</div>
+        </div>
+    </div>
+
+    <script>
+        let allMeals = [];
+        let currentSort = { column: null, direction: 'asc' };
+
+        // Load meals with ratings
+        async function loadMeals() {
+            try {
+                const response = await fetch('/get_meals_with_ratings');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allMeals = data.meals;
+                    displayMeals();
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                } else {
+                    console.error('Error loading meals:', data.error);
+                    document.getElementById('loadingIndicator').innerHTML = '<div class="text-red-500">Error loading meals</div>';
+                }
+            } catch (error) {
+                console.error('Error loading meals:', error);
+                document.getElementById('loadingIndicator').innerHTML = '<div class="text-red-500">Error loading meals</div>';
+            }
+        }
+
+        // Display meals in table
+        function displayMeals() {
+            const tableBody = document.getElementById('mealsTableBody');
+            let html = '';
+
+            allMeals.forEach(meal => {
+                const calories = meal.calories || 0;
+                const protein = meal.macros?.protein || 0;
+                const cost = meal.estimated_cost_usd || 0;
+                const rating = meal.user_rating || 5;
+                
+                // Truncate description to 60 characters
+                const truncatedDescription = meal.description.length > 60 
+                    ? meal.description.substring(0, 60) + '...' 
+                    : meal.description;
+                
+                html += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${meal.title}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-sm text-gray-600" title="${meal.description}">${truncatedDescription}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center gap-2">
+                                <select class="rating-select px-2 py-1 border border-gray-300 rounded text-sm" 
+                                        data-meal-title="${meal.title}" 
+                                        onchange="updateRating('${meal.title}', this.value)">
+                                    ${generateRatingOptions(rating)}
+                                </select>
+                                <span class="text-sm font-medium text-gray-700">${rating}/10</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-semibold text-green-600">$${cost.toFixed(2)}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${calories}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${protein}g</div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableBody.innerHTML = html;
+        }
+
+        // Generate rating options for select dropdown
+        function generateRatingOptions(currentRating) {
+            let options = '';
+            for (let i = 1; i <= 10; i++) {
+                const selected = i == currentRating ? 'selected' : '';
+                options += `<option value="${i}" ${selected}>${i}</option>`;
+            }
+            return options;
+        }
+
+        // Update rating for a meal
+        async function updateRating(mealTitle, rating) {
+            try {
+                const response = await fetch('/update_rating', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        meal_title: mealTitle,
+                        rating: parseInt(rating)
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Update local data
+                    const meal = allMeals.find(m => m.title === mealTitle);
+                    if (meal) {
+                        meal.user_rating = parseInt(rating);
+                    }
+                    
+                    // Redisplay
+                    displayMeals();
+                    
+                    // Show success message
+                    showMessage('Rating updated successfully!', 'success');
+                } else {
+                    showMessage('Error updating rating: ' + (result.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                showMessage('Error updating rating. Please try again.', 'error');
+            }
+        }
+
+        // Sort table by column
+        function sortTable(column) {
+            // Toggle sort direction if clicking the same column
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+
+            // Sort the meals array
+            allMeals.sort((a, b) => {
+                let aVal, bVal;
+                
+                switch (column) {
+                    case 'name':
+                        aVal = a.title.toLowerCase();
+                        bVal = b.title.toLowerCase();
+                        break;
+                    case 'rating':
+                        aVal = a.user_rating || 5;
+                        bVal = b.user_rating || 5;
+                        break;
+                    case 'price':
+                        aVal = a.estimated_cost_usd || 0;
+                        bVal = b.estimated_cost_usd || 0;
+                        break;
+                    case 'calories':
+                        aVal = a.calories || 0;
+                        bVal = b.calories || 0;
+                        break;
+                    case 'protein':
+                        aVal = a.macros?.protein || 0;
+                        bVal = b.macros?.protein || 0;
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // Update sort indicators
+            updateSortIndicators(column);
+            
+            // Redisplay the table
+            displayMeals();
+        }
+
+        // Update sort indicators in table headers
+        function updateSortIndicators(activeColumn) {
+            const columns = ['name', 'rating', 'price', 'calories', 'protein'];
+            columns.forEach(col => {
+                const indicator = document.getElementById(`${col}-sort`);
+                if (col === activeColumn) {
+                    indicator.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
+                } else {
+                    indicator.textContent = '↕';
+                }
+            });
+        }
+
+        // Reset all ratings to 5
+        async function resetAllRatings() {
+            if (!confirm('Are you sure you want to reset all ratings to 5? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/reset_ratings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Update local data
+                    allMeals.forEach(meal => {
+                        meal.user_rating = 5;
+                    });
+                    
+                    // Redisplay
+                    displayMeals();
+                    
+                    showMessage('All ratings have been reset to 5!', 'success');
+                } else {
+                    showMessage('Error resetting ratings: ' + (result.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                showMessage('Error resetting ratings. Please try again.', 'error');
+            }
+        }
+
+        // Show message to user
+        function showMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `fixed top-20 right-4 px-6 py-3 rounded-lg text-white z-50 ${
+                type === 'success' ? 'bg-black' : 'bg-gray-800'
+            }`;
+            messageDiv.textContent = message;
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                document.body.removeChild(messageDiv);
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('resetRatingsBtn').addEventListener('click', resetAllRatings);
+
+        // Load meals when page loads
+        document.addEventListener('DOMContentLoaded', loadMeals);
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-gray-300">© 2025 Kuang Xu. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
