@@ -2,4 +2,6 @@
 
 # Activate virtual environment and run the Flask application
 source venv/bin/activate
-python app.py
+
+# Use the Python executable from the venv directly (most reliable)
+exec venv/bin/python app.py

@@ -30,13 +30,10 @@ Where $c_i$ is the cost of meal $i$.
 ### Constraints
 
 **1. Exactly one meal per day:**
-
 $$\sum_{i=1}^{n} x_{i,j} = 1 \quad \forall j \in \{1,2,\ldots,7\}$$
 
 **2. Nutritional requirements (average per meal):**
-
 $$\frac{1}{7} \sum_{i=1}^{n} \sum_{j=1}^{7} n_{i,k} \cdot x_{i,j} \geq N_{k}^{min} \quad \forall k$$
-
 $$\frac{1}{7} \sum_{i=1}^{n} \sum_{j=1}^{7} n_{i,k} \cdot x_{i,j} \leq N_{k}^{max} \quad \forall k$$
 
 Where:
@@ -45,7 +42,6 @@ Where:
 - $N_{k}^{max}$ = maximum allowed amount of nutrient $k$ per meal
 
 **3. Meal frequency limit:**
-
 $$\sum_{j=1}^{7} x_{i,j} \leq F \quad \forall i$$
 
 Where $F$ is the maximum number of times a meal can appear in the week.

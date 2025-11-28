@@ -386,43 +386,58 @@
 
     <script>
 
+        // Helper function to safely parse numeric input values
+        // Returns the parsed number, or default value if input is empty/invalid
+        function parseNutrientValue(inputElement, defaultValue) {
+            const value = inputElement.value.trim();
+            if (value === '') {
+                return defaultValue;
+            }
+            const parsed = parseInt(value, 10);
+            return isNaN(parsed) ? defaultValue : parsed;
+        }
+
         // Generate meal plan functionality
         document.getElementById('generateBtn').addEventListener('click', async () => {
             const requirements = {
                 // Basic Nutrition
-                minCalories: parseInt(document.getElementById('minCalories').value) || 0,
-                maxCalories: parseInt(document.getElementById('maxCalories').value) || 9999,
+                minCalories: parseNutrientValue(document.getElementById('minCalories'), 0),
+                maxCalories: parseNutrientValue(document.getElementById('maxCalories'), 9999),
                 
                 // Macronutrients
-                minProtein: parseInt(document.getElementById('minProtein').value) || 0,
-                maxProtein: parseInt(document.getElementById('maxProtein').value) || 9999,
-                minCarbs: parseInt(document.getElementById('minCarbs').value) || 0,
-                maxCarbs: parseInt(document.getElementById('maxCarbs').value) || 9999,
-                minFat: parseInt(document.getElementById('minFat').value) || 0,
-                maxFat: parseInt(document.getElementById('maxFat').value) || 9999,
+                minProtein: parseNutrientValue(document.getElementById('minProtein'), 0),
+                maxProtein: parseNutrientValue(document.getElementById('maxProtein'), 9999),
+                minCarbs: parseNutrientValue(document.getElementById('minCarbs'), 0),
+                maxCarbs: parseNutrientValue(document.getElementById('maxCarbs'), 9999),
+                minFat: parseNutrientValue(document.getElementById('minFat'), 0),
+                maxFat: parseNutrientValue(document.getElementById('maxFat'), 9999),
                 
                 // Vitamins
-                minVitaminA: parseInt(document.getElementById('minVitaminA').value) || 0,
-                maxVitaminA: parseInt(document.getElementById('maxVitaminA').value) || 9999,
-                minVitaminC: parseInt(document.getElementById('minVitaminC').value) || 0,
-                maxVitaminC: parseInt(document.getElementById('maxVitaminC').value) || 9999,
-                minVitaminD: parseInt(document.getElementById('minVitaminD').value) || 0,
-                maxVitaminD: parseInt(document.getElementById('maxVitaminD').value) || 9999,
-                minVitaminE: parseInt(document.getElementById('minVitaminE').value) || 0,
-                maxVitaminE: parseInt(document.getElementById('maxVitaminE').value) || 9999,
+                minVitaminA: parseNutrientValue(document.getElementById('minVitaminA'), 0),
+                maxVitaminA: parseNutrientValue(document.getElementById('maxVitaminA'), 9999),
+                minVitaminC: parseNutrientValue(document.getElementById('minVitaminC'), 0),
+                maxVitaminC: parseNutrientValue(document.getElementById('maxVitaminC'), 9999),
+                minVitaminD: parseNutrientValue(document.getElementById('minVitaminD'), 0),
+                maxVitaminD: parseNutrientValue(document.getElementById('maxVitaminD'), 9999),
+                minVitaminE: parseNutrientValue(document.getElementById('minVitaminE'), 0),
+                maxVitaminE: parseNutrientValue(document.getElementById('maxVitaminE'), 9999),
                 
                 // Minerals
-                minCalcium: parseInt(document.getElementById('minCalcium').value) || 0,
-                maxCalcium: parseInt(document.getElementById('maxCalcium').value) || 9999,
-                minIron: parseInt(document.getElementById('minIron').value) || 0,
-                maxIron: parseInt(document.getElementById('maxIron').value) || 9999,
-                minMagnesium: parseInt(document.getElementById('minMagnesium').value) || 0,
-                maxMagnesium: parseInt(document.getElementById('maxMagnesium').value) || 9999,
-                minPotassium: parseInt(document.getElementById('minPotassium').value) || 0,
-                maxPotassium: parseInt(document.getElementById('maxPotassium').value) || 9999,
-                minSodium: parseInt(document.getElementById('minSodium').value) || 0,
-                maxSodium: parseInt(document.getElementById('maxSodium').value) || 9999,
+                minCalcium: parseNutrientValue(document.getElementById('minCalcium'), 0),
+                maxCalcium: parseNutrientValue(document.getElementById('maxCalcium'), 9999),
+                minIron: parseNutrientValue(document.getElementById('minIron'), 0),
+                maxIron: parseNutrientValue(document.getElementById('maxIron'), 9999),
+                minMagnesium: parseNutrientValue(document.getElementById('minMagnesium'), 0),
+                maxMagnesium: parseNutrientValue(document.getElementById('maxMagnesium'), 9999),
+                minPotassium: parseNutrientValue(document.getElementById('minPotassium'), 0),
+                maxPotassium: parseNutrientValue(document.getElementById('maxPotassium'), 9999),
+                minSodium: parseNutrientValue(document.getElementById('minSodium'), 0),
+                maxSodium: parseNutrientValue(document.getElementById('maxSodium'), 9999),
             };
+
+            // Debug: Log requirements being sent
+            console.log('Sending requirements:', requirements);
+            console.log('minCalories value:', requirements.minCalories);
 
             // Get selected objective and meal frequency
             const objective = document.querySelector('input[name="objective"]:checked').value;
@@ -440,6 +455,8 @@
                 const result = await response.json();
                 
                 if (response.ok) {
+                    // Store requirements for displaying constraints
+                    currentRequirements = requirements;
                     displayMealPlan(result.meal_plan, result.optimization_results);
                 } else {
                     alert('Error generating meal plan: ' + (result.error || 'Unknown error'));
@@ -449,6 +466,45 @@
             }
         });
 
+
+        // Store current requirements for displaying constraints
+        let currentRequirements = null;
+
+        // Helper function to format nutrition row with constraints
+        function formatNutritionRow(name, average, unit, minVal, maxVal) {
+            const avg = average !== undefined && average !== null ? average.toFixed(1) : 'N/A';
+            let constraintText = 'N/A';
+            
+            if (minVal !== undefined && minVal !== null && maxVal !== undefined && maxVal !== null) {
+                const min = minVal === 0 ? '0' : minVal;
+                const max = maxVal === 9999 ? '∞' : maxVal;
+                constraintText = `${min} - ${max}`;
+            } else if (minVal !== undefined && minVal !== null) {
+                constraintText = `≥ ${minVal === 0 ? '0' : minVal}`;
+            } else if (maxVal !== undefined && maxVal !== null) {
+                constraintText = `≤ ${maxVal === 9999 ? '∞' : maxVal}`;
+            }
+            
+            // Determine if value is within constraints (for styling)
+            let statusClass = '';
+            if (average !== undefined && average !== null && minVal !== undefined && maxVal !== undefined) {
+                if (average < minVal) {
+                    statusClass = 'text-red-600 font-semibold';
+                } else if (average > maxVal && maxVal !== 9999) {
+                    statusClass = 'text-orange-600 font-semibold';
+                } else {
+                    statusClass = 'text-green-600';
+                }
+            }
+            
+            return `
+                <tr class="border-b border-gray-200">
+                    <td class="py-1.5 px-2 text-gray-800">${name}</td>
+                    <td class="py-1.5 px-2 text-right ${statusClass}">${avg}${unit}</td>
+                    <td class="py-1.5 px-2 text-right text-gray-600">${constraintText}${unit}</td>
+                </tr>
+            `;
+        }
 
         function displayMealPlan(mealPlan, optimizationResults = null) {
             const resultsDiv = document.getElementById('mealPlanResults');
@@ -487,21 +543,32 @@
                         </div>
                         <div class="mt-3 text-sm text-gray-600">
                             <strong>Average Nutrition per Meal:</strong>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-2">
-                                <div>Calories: ${optimizationResults.nutritional_summary.calories?.average?.toFixed(1) || 'N/A'}</div>
-                                <div>Protein: ${optimizationResults.nutritional_summary.protein?.average?.toFixed(1) || 'N/A'}g</div>
-                                <div>Carbs: ${optimizationResults.nutritional_summary.carbs?.average?.toFixed(1) || 'N/A'}g</div>
-                                <div>Fat: ${optimizationResults.nutritional_summary.fat?.average?.toFixed(1) || 'N/A'}g</div>
-                                <div>Vitamin A: ${optimizationResults.nutritional_summary.vitamin_a_mcg?.average?.toFixed(1) || 'N/A'}mcg</div>
-                                <div>Vitamin C: ${optimizationResults.nutritional_summary.vitamin_c_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Vitamin D: ${optimizationResults.nutritional_summary.vitamin_d_mcg?.average?.toFixed(1) || 'N/A'}mcg</div>
-                                <div>Vitamin E: ${optimizationResults.nutritional_summary.vitamin_e_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Calcium: ${optimizationResults.nutritional_summary.calcium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Iron: ${optimizationResults.nutritional_summary.iron_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Magnesium: ${optimizationResults.nutritional_summary.magnesium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Potassium: ${optimizationResults.nutritional_summary.potassium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Sodium: ${optimizationResults.nutritional_summary.sodium_mg?.average?.toFixed(1) || 'N/A'}mg</div>
-                                <div>Zinc: ${optimizationResults.nutritional_summary.zinc_mg?.average?.toFixed(1) || 'N/A'}mg</div>
+                            <div class="mt-2 overflow-x-auto">
+                                <table class="min-w-full text-xs">
+                                    <thead>
+                                        <tr class="border-b border-gray-300">
+                                            <th class="text-left py-2 px-2 font-semibold text-gray-800">Nutrient</th>
+                                            <th class="text-right py-2 px-2 font-semibold text-gray-800">Average</th>
+                                            <th class="text-right py-2 px-2 font-semibold text-gray-800">Constraint (Min - Max)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${formatNutritionRow('Calories', optimizationResults.nutritional_summary.calories?.average, 'cal', currentRequirements?.minCalories, currentRequirements?.maxCalories)}
+                                        ${formatNutritionRow('Protein', optimizationResults.nutritional_summary.protein?.average, 'g', currentRequirements?.minProtein, currentRequirements?.maxProtein)}
+                                        ${formatNutritionRow('Carbs', optimizationResults.nutritional_summary.carbs?.average, 'g', currentRequirements?.minCarbs, currentRequirements?.maxCarbs)}
+                                        ${formatNutritionRow('Fat', optimizationResults.nutritional_summary.fat?.average, 'g', currentRequirements?.minFat, currentRequirements?.maxFat)}
+                                        ${formatNutritionRow('Vitamin A', optimizationResults.nutritional_summary.vitamin_a_mcg?.average, 'mcg', currentRequirements?.minVitaminA, currentRequirements?.maxVitaminA)}
+                                        ${formatNutritionRow('Vitamin C', optimizationResults.nutritional_summary.vitamin_c_mg?.average, 'mg', currentRequirements?.minVitaminC, currentRequirements?.maxVitaminC)}
+                                        ${formatNutritionRow('Vitamin D', optimizationResults.nutritional_summary.vitamin_d_mcg?.average, 'mcg', currentRequirements?.minVitaminD, currentRequirements?.maxVitaminD)}
+                                        ${formatNutritionRow('Vitamin E', optimizationResults.nutritional_summary.vitamin_e_mg?.average, 'mg', currentRequirements?.minVitaminE, currentRequirements?.maxVitaminE)}
+                                        ${formatNutritionRow('Calcium', optimizationResults.nutritional_summary.calcium_mg?.average, 'mg', currentRequirements?.minCalcium, currentRequirements?.maxCalcium)}
+                                        ${formatNutritionRow('Iron', optimizationResults.nutritional_summary.iron_mg?.average, 'mg', currentRequirements?.minIron, currentRequirements?.maxIron)}
+                                        ${formatNutritionRow('Magnesium', optimizationResults.nutritional_summary.magnesium_mg?.average, 'mg', currentRequirements?.minMagnesium, currentRequirements?.maxMagnesium)}
+                                        ${formatNutritionRow('Potassium', optimizationResults.nutritional_summary.potassium_mg?.average, 'mg', currentRequirements?.minPotassium, currentRequirements?.maxPotassium)}
+                                        ${formatNutritionRow('Sodium', optimizationResults.nutritional_summary.sodium_mg?.average, 'mg', currentRequirements?.minSodium, currentRequirements?.maxSodium)}
+                                        ${formatNutritionRow('Zinc', optimizationResults.nutritional_summary.zinc_mg?.average, 'mg', null, null)}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="mt-4">

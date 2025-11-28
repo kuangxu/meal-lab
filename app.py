@@ -94,6 +94,12 @@ def run_optimization(optimizer: MealOptimizer, requirements: Dict, objective: st
     """
     Run optimization with custom nutritional requirements from frontend.
     """
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    # Log received requirements for debugging
+    logger.info(f"Received requirements: {requirements}")
+    
     # Create a custom nutritional profile from frontend requirements
     custom_profile = {
         "calories": {
@@ -149,6 +155,9 @@ def run_optimization(optimizer: MealOptimizer, requirements: Dict, objective: st
             "max": requirements.get('maxSodium', 400)
         }
     }
+    
+    # Log the custom profile being used
+    logger.info(f"Custom profile created: {custom_profile}")
     
     # Temporarily add custom profile to optimizer
     optimizer.nutritional_profiles['custom'] = custom_profile

@@ -2,7 +2,7 @@
 Meal Planning Linear Optimization Problem
 
 This module implements a linear optimization problem for weekly meal planning
-using Google OR-Tools. The optimization minimizes total cost while ensuring
+using PuLP. The optimization minimizes total cost while ensuring
 nutritional constraints are met.
 
 Problem Structure:
@@ -16,7 +16,7 @@ Problem Structure:
 
 import json
 import numpy as np
-from ortools.linear_solver import pywraplp
+from pulp import LpProblem, LpMinimize, LpMaximize, LpVariable, LpStatus, lpSum, value
 from typing import Dict, List, Tuple, Optional
 import logging
 
@@ -166,10 +166,13 @@ class MealOptimizer:
         
         profile = self.nutritional_profiles[profile_name]
         
-        # Create solver
-        solver = pywraplp.Solver.CreateSolver('SCIP')
-        if not solver:
-            raise RuntimeError("Could not create solver")
+        # Create problem
+        if objective == "minimize_cost":
+            problem = LpProblem("MealPlanning", LpMinimize)
+        elif objective == "maximize_rating":
+            problem = LpProblem("MealPlanning", LpMaximize)
+        else:
+            raise ValueError(f"Unknown objective: {objective}")
         
         # Decision variables: X[i,j] = 1 if meal i is selected for meal slot j
         # i: meal index (0 to num_meals-1)
@@ -177,109 +180,126 @@ class MealOptimizer:
         x = {}
         for i in range(self.num_meals):
             for j in range(self.total_meal_slots):
-                x[i, j] = solver.IntVar(0, 1, f'x_{i}_{j}')
+                x[i, j] = LpVariable(f'x_{i}_{j}', cat='Binary')
         
         logger.info(f"Created {self.num_meals * self.total_meal_slots} decision variables")
         
         # Objective: Minimize cost or maximize rating
-        solver_objective = solver.Objective()
+        objective_expr = []
         for i in range(self.num_meals):
             for j in range(self.total_meal_slots):
                 if objective == "minimize_cost":
                     # Minimize total cost
-                    solver_objective.SetCoefficient(x[i, j], self.meals[i]["estimated_cost_usd"])
+                    objective_expr.append(self.meals[i]["estimated_cost_usd"] * x[i, j])
                 elif objective == "maximize_rating":
-                    # Maximize total user rating (use negative for maximization)
+                    # Maximize total user rating
                     user_rating = self.meals[i].get("user_rating", 5)  # Default to 5 if not set
-                    solver_objective.SetCoefficient(x[i, j], -user_rating)
-                else:
-                    raise ValueError(f"Unknown objective: {objective}")
+                    objective_expr.append(user_rating * x[i, j])
         
-        solver_objective.SetMinimization()  # Always minimize (use negative coefficients for maximization)
+        problem += lpSum(objective_expr)
         
         # Constraint 1: Each meal can be selected at most max_meals_per_meal times
         for i in range(self.num_meals):
-            constraint = solver.Constraint(0, max_meals_per_meal)
-            for j in range(self.total_meal_slots):
-                constraint.SetCoefficient(x[i, j], 1)
+            problem += lpSum([x[i, j] for j in range(self.total_meal_slots)]) <= max_meals_per_meal
         
         # Constraint 2: Ensure we have exactly one meal per day
         for day_idx in range(self.num_days):
-            day_constraint = solver.Constraint(1, 1)  # Exactly 1 meal per day
+            # Exactly 1 meal per day
+            day_vars = []
             for i in range(self.num_meals):
                 for meal_slot in range(self.meals_per_day):
                     j = day_idx * self.meals_per_day + meal_slot
-                    day_constraint.SetCoefficient(x[i, j], 1)
+                    day_vars.append(x[i, j])
+            problem += lpSum(day_vars) == 1
         
         # Constraint 3: Nutritional constraints on AVERAGE values
         # For each nutrient, ensure average across all selected meals falls within bounds
         # Since we have exactly 7 meals (1 per day), we can use fixed total
         total_meals = 7  # Fixed number of meals per week
         
-        for nutrient in self.all_nutrients:
+        # Process all nutrients including calories
+        nutrients_to_process = ["calories"] + self.all_nutrients
+        
+        for nutrient in nutrients_to_process:
             profile_nutrient = self._map_profile_nutrient(nutrient)
             
             if profile_nutrient in profile:
                 min_val = profile[profile_nutrient]["min"]
                 max_val = profile[profile_nutrient]["max"]
                 
+                logger.info(f"Setting constraints for {nutrient} (profile: {profile_nutrient}): min={min_val}, max={max_val}")
+                
                 # Correct approach: 
                 # sum(nutrient_value * x[i,j]) >= min_val * total_meals
                 # sum(nutrient_value * x[i,j]) <= max_val * total_meals
                 
                 # Nutritional lower bound: sum(nutrient_value * x[i,j]) >= min_val * total_meals
-                lower_constraint = solver.Constraint(min_val * total_meals, solver.infinity())
-                for i in range(self.num_meals):
-                    nutrient_value = self._get_nutrient_value(self.meals[i], nutrient)
-                    for j in range(self.total_meal_slots):
-                        lower_constraint.SetCoefficient(x[i, j], nutrient_value)
+                # Only add lower bound constraint if min_val > 0
+                if min_val > 0:
+                    nutrient_expr = []
+                    for i in range(self.num_meals):
+                        nutrient_value = self._get_nutrient_value(self.meals[i], nutrient)
+                        for j in range(self.total_meal_slots):
+                            nutrient_expr.append(nutrient_value * x[i, j])
+                    problem += lpSum(nutrient_expr) >= min_val * total_meals
+                    logger.info(f"  Lower bound constraint: sum >= {min_val * total_meals} (avg >= {min_val})")
+                else:
+                    logger.info(f"  Skipping lower bound constraint (min_val = 0)")
                 
                 # Nutritional upper bound: sum(nutrient_value * x[i,j]) <= max_val * total_meals
-                upper_constraint = solver.Constraint(0, max_val * total_meals)
-                for i in range(self.num_meals):
-                    nutrient_value = self._get_nutrient_value(self.meals[i], nutrient)
-                    for j in range(self.total_meal_slots):
-                        upper_constraint.SetCoefficient(x[i, j], nutrient_value)
+                if max_val < float('inf'):
+                    nutrient_expr = []
+                    for i in range(self.num_meals):
+                        nutrient_value = self._get_nutrient_value(self.meals[i], nutrient)
+                        for j in range(self.total_meal_slots):
+                            nutrient_expr.append(nutrient_value * x[i, j])
+                    problem += lpSum(nutrient_expr) <= max_val * total_meals
+                    logger.info(f"  Upper bound constraint: sum <= {max_val * total_meals} (avg <= {max_val})")
+                else:
+                    logger.info(f"  Skipping upper bound constraint (max_val = infinity)")
         
         # Constraint 4: Limit total number of meals to exactly 7 (1 per day)
-        total_meals_constraint = solver.Constraint(7, 7)  # Exactly 7 meals per week
-        for i in range(self.num_meals):
-            for j in range(self.total_meal_slots):
-                total_meals_constraint.SetCoefficient(x[i, j], 1)
+        # This is already enforced by Constraint 2, but we'll keep it for clarity
+        total_meals_expr = [x[i, j] for i in range(self.num_meals) for j in range(self.total_meal_slots)]
+        problem += lpSum(total_meals_expr) == 7
         
         # Constraint 5: Non-negativity (already handled by IntVar bounds)
         
         logger.info("Added all constraints, solving...")
         
         # Solve
-        status = solver.Solve()
+        problem.solve()
+        status = LpStatus[problem.status]
         
-        if status == pywraplp.Solver.OPTIMAL:
+        if status == "Optimal":
             logger.info("Optimal solution found!")
             
             # Extract solution
             solution = self._extract_solution(x, profile_name)
             solution["status"] = "OPTIMAL"
-            solution["objective_value"] = solver.Objective().Value()
+            solution["objective_value"] = value(problem.objective)
             
             return solution
             
-        elif status == pywraplp.Solver.FEASIBLE:
-            logger.warning("Feasible solution found (may not be optimal)")
+        elif status == "Not Solved":
+            # Try with a different solver or check if it's actually feasible
+            logger.warning("Solution status: Not Solved, trying alternative approach")
+            # PuLP might need a different solver - try default
+            problem.solve()
+            status = LpStatus[problem.status]
             
-            solution = self._extract_solution(x, profile_name)
-            solution["status"] = "FEASIBLE"
-            solution["objective_value"] = solver.Objective().Value()
-            
-            return solution
-            
-        else:
-            logger.error("No solution found")
-            return {
-                "status": "INFEASIBLE",
-                "message": "No feasible solution found. Try relaxing constraints.",
-                "objective_value": None
-            }
+            if status == "Optimal":
+                solution = self._extract_solution(x, profile_name)
+                solution["status"] = "FEASIBLE"
+                solution["objective_value"] = value(problem.objective)
+                return solution
+        
+        logger.error(f"No solution found. Status: {status}")
+        return {
+            "status": "INFEASIBLE",
+            "message": f"No feasible solution found. Status: {status}. Try relaxing constraints.",
+            "objective_value": None
+        }
     
     def _extract_solution(self, x: Dict, profile_name: str) -> Dict:
         """
@@ -302,7 +322,7 @@ class MealOptimizer:
         # Extract selected meals
         for i in range(self.num_meals):
             for j in range(self.total_meal_slots):
-                if x[i, j].solution_value() > 0.5:  # Binary variable
+                if x[i, j].varValue is not None and x[i, j].varValue > 0.5:  # Binary variable
                     day_idx = j // self.meals_per_day
                     meal_idx = j % self.meals_per_day
                     day = self.days_of_week[day_idx]

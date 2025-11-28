@@ -1,4 +1,4 @@
 Flask==2.3.3
 Werkzeug==2.3.7
-ortools>=9.0.0
+pulp>=2.7.0
 numpy>=1.21.0
