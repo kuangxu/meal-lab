@@ -91,7 +91,7 @@ You'll know it's working when you see `(venv)` at the beginning of your command 
 pip install -r requirements.txt
 ```
 
-This installs all the necessary Python libraries (Flask, OR-Tools, etc.).
+This installs all the necessary Python libraries (Flask, PuLP, etc.).
 
 ### Step 4: Run the Application
 ```bash
@@ -183,7 +183,7 @@ Visit the "Rate Meals" page to:
 
 ### Built With
 - **Backend**: Python Flask (web framework)
-- **Optimization**: Google OR-Tools (linear programming solver)
+- **Optimization**: PuLP (Python linear programming library)
 - **Frontend**: HTML, CSS (Tailwind), JavaScript
 - **Charts**: Chart.js for data visualization
 
@@ -230,5 +230,3 @@ Feel free to submit issues, feature requests, or pull requests to improve Meal L
 © 2025 Kuang Xu. All rights reserved.
 
 ---
-
-*Meal Lab - Where mathematics meets meal planning* 🍽️📊
