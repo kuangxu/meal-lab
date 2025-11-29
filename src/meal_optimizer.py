@@ -62,7 +62,7 @@ class MealOptimizer:
         self.micro_nutrients = [
             "vitamin_a_mcg", "vitamin_c_mg", "vitamin_d_mcg", "vitamin_e_mg",
             "calcium_mg", "iron_mg", "magnesium_mg", "potassium_mg", 
-            "sodium_mg", "zinc_mg"
+            "sodium_mg"
         ]
         self.all_nutrients = self.macro_nutrients + self.micro_nutrients
         
@@ -144,10 +144,33 @@ class MealOptimizer:
             "iron": "iron_mg",
             "magnesium": "magnesium_mg",
             "potassium": "potassium_mg",
-            "sodium": "sodium_mg",
-            "zinc": "zinc_mg"
+            "sodium": "sodium_mg"
         }
         return mapping.get(profile_nutrient, profile_nutrient)
+    
+    def _map_nutrient_to_profile(self, nutrient: str) -> str:
+        """
+        Map meal data nutrient names to nutritional profile nutrient names.
+        This is the reverse of _map_profile_nutrient.
+        
+        Args:
+            nutrient: Nutrient name from meal data
+            
+        Returns:
+            Corresponding nutrient name in profile
+        """
+        reverse_mapping = {
+            "vitamin_a_mcg": "vitaminA",
+            "vitamin_c_mg": "vitaminC",
+            "vitamin_d_mcg": "vitaminD",
+            "vitamin_e_mg": "vitaminE",
+            "calcium_mg": "calcium",
+            "iron_mg": "iron",
+            "magnesium_mg": "magnesium",
+            "potassium_mg": "potassium",
+            "sodium_mg": "sodium"
+        }
+        return reverse_mapping.get(nutrient, nutrient)
     
     def solve(self, profile_name: str = "healthy-adult", 
               max_meals_per_meal: int = 2, objective: str = "minimize_cost") -> Dict:
@@ -221,7 +244,8 @@ class MealOptimizer:
         nutrients_to_process = ["calories"] + self.all_nutrients
         
         for nutrient in nutrients_to_process:
-            profile_nutrient = self._map_profile_nutrient(nutrient)
+            # Map nutrient name (e.g., "vitamin_d_mcg") to profile name (e.g., "vitaminD")
+            profile_nutrient = self._map_nutrient_to_profile(nutrient)
             
             if profile_nutrient in profile:
                 min_val = profile[profile_nutrient]["min"]

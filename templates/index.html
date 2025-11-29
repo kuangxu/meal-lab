@@ -566,7 +566,6 @@
                                         ${formatNutritionRow('Magnesium', optimizationResults.nutritional_summary.magnesium_mg?.average, 'mg', currentRequirements?.minMagnesium, currentRequirements?.maxMagnesium)}
                                         ${formatNutritionRow('Potassium', optimizationResults.nutritional_summary.potassium_mg?.average, 'mg', currentRequirements?.minPotassium, currentRequirements?.maxPotassium)}
                                         ${formatNutritionRow('Sodium', optimizationResults.nutritional_summary.sodium_mg?.average, 'mg', currentRequirements?.minSodium, currentRequirements?.maxSodium)}
-                                        ${formatNutritionRow('Zinc', optimizationResults.nutritional_summary.zinc_mg?.average, 'mg', null, null)}
                                     </tbody>
                                 </table>
                             </div>
@@ -707,8 +706,7 @@
                 'Iron': { value: optimizationResults.nutritional_summary.iron_mg?.average || 0, range: [1, 5], unit: 'mg' },
                 'Magnesium': { value: optimizationResults.nutritional_summary.magnesium_mg?.average || 0, range: [20, 100], unit: 'mg' },
                 'Potassium': { value: optimizationResults.nutritional_summary.potassium_mg?.average || 0, range: [150, 800], unit: 'mg' },
-                'Sodium': { value: optimizationResults.nutritional_summary.sodium_mg?.average || 0, range: [200, 1000], unit: 'mg' },
-                'Zinc': { value: optimizationResults.nutritional_summary.zinc_mg?.average || 0, range: [0.5, 10], unit: 'mg' }
+                'Sodium': { value: optimizationResults.nutritional_summary.sodium_mg?.average || 0, range: [200, 1000], unit: 'mg' }
             };
 
             // Normalize values to 0-100 scale for meaningful comparison
@@ -1003,7 +1001,6 @@
                                 <div><strong>Magnesium:</strong> 20-100mg</div>
                                 <div><strong>Potassium:</strong> 150-800mg</div>
                                 <div><strong>Sodium:</strong> 200-1000mg</div>
-                                <div><strong>Zinc:</strong> 0.5-10mg</div>
                             </div>
                         </div>
                         
