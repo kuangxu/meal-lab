@@ -243,27 +243,23 @@ class MealOptimizer:
         # Process all nutrients including calories
         nutrients_to_process = ["calories"] + self.all_nutrients
         
+        # Add nutritional constraints
         for nutrient in nutrients_to_process:
-            # Map nutrient name (e.g., "vitamin_d_mcg") to profile name (e.g., "vitaminD")
             profile_nutrient = self._map_nutrient_to_profile(nutrient)
-            
+
             logger.debug(f"Processing nutrient: {nutrient} -> mapped to profile key: {profile_nutrient}")
             logger.debug(f"Profile keys available: {list(profile.keys())}")
-            
+
             if profile_nutrient in profile:
                 min_val = profile[profile_nutrient]["min"]
                 max_val = profile[profile_nutrient]["max"]
-                
-                logger.info(f"Setting constraints for {nutrient} (profile: {profile_nutrient}): min={min_val}, max={max_val}")
-            else:
-                logger.warning(f"Profile key '{profile_nutrient}' not found in profile for nutrient '{nutrient}'. Available keys: {list(profile.keys())}")
-                
-                # Correct approach: 
-                # sum(nutrient_value * x[i,j]) >= min_val * total_meals
-                # sum(nutrient_value * x[i,j]) <= max_val * total_meals
-                
-                # Nutritional lower bound: sum(nutrient_value * x[i,j]) >= min_val * total_meals
-                # Only add lower bound constraint if min_val > 0
+
+                logger.info(
+                    f"Setting constraints for {nutrient} (profile: {profile_nutrient}): "
+                    f"min={min_val}, max={max_val}"
+                )
+
+                # Lower bound constraint
                 if min_val > 0:
                     nutrient_expr = []
                     for i in range(self.num_meals):
@@ -271,21 +267,34 @@ class MealOptimizer:
                         for j in range(self.total_meal_slots):
                             nutrient_expr.append(nutrient_value * x[i, j])
                     problem += lpSum(nutrient_expr) >= min_val * total_meals
-                    logger.info(f"  Lower bound constraint: sum >= {min_val * total_meals} (avg >= {min_val})")
+                    logger.info(
+                        f"  Lower bound constraint: sum >= {min_val * total_meals} "
+                        f"(avg >= {min_val})"
+                    )
                 else:
-                    logger.info(f"  Skipping lower bound constraint (min_val = 0)")
-                
-                # Nutritional upper bound: sum(nutrient_value * x[i,j]) <= max_val * total_meals
-                if max_val < float('inf'):
+                    logger.info("  Skipping lower bound constraint (min_val = 0)")
+
+                # Upper bound constraint
+                if max_val < float("inf"):
                     nutrient_expr = []
                     for i in range(self.num_meals):
                         nutrient_value = self._get_nutrient_value(self.meals[i], nutrient)
                         for j in range(self.total_meal_slots):
                             nutrient_expr.append(nutrient_value * x[i, j])
                     problem += lpSum(nutrient_expr) <= max_val * total_meals
-                    logger.info(f"  Upper bound constraint: sum <= {max_val * total_meals} (avg <= {max_val})")
+                    logger.info(
+                        f"  Upper bound constraint: sum <= {max_val * total_meals} "
+                        f"(avg <= {max_val})"
+                    )
                 else:
-                    logger.info(f"  Skipping upper bound constraint (max_val = infinity)")
+                    logger.info("  Skipping upper bound constraint (max_val = infinity)")
+
+            else:
+                logger.warning(
+                    f"Profile key '{profile_nutrient}' not found in profile for nutrient "
+                    f"'{nutrient}'. Available keys: {list(profile.keys())}"
+                )
+                continue
         
         # Constraint 4: Limit total number of meals to exactly 7 (1 per day)
         # This is already enforced by Constraint 2, but we'll keep it for clarity
