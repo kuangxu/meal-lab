@@ -62,6 +62,14 @@ def generate_meal_plan():
         objective = data.get('objective', 'minimize_cost')  # Default to minimize cost
         meal_frequency = data.get('mealFrequency', 2)  # Default to 2 times per week
         
+        # Log incoming request for debugging
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"=== Received optimization request ===")
+        logger.info(f"Requirements keys: {list(requirements.keys())}")
+        logger.info(f"Sample values - minCalories: {requirements.get('minCalories')}, minVitaminD: {requirements.get('minVitaminD')}")
+        logger.info(f"Objective: {objective}, Meal frequency: {meal_frequency}")
+        
         # Initialize the meal optimizer
         optimizer = MealOptimizer()
         

@@ -247,11 +247,16 @@ class MealOptimizer:
             # Map nutrient name (e.g., "vitamin_d_mcg") to profile name (e.g., "vitaminD")
             profile_nutrient = self._map_nutrient_to_profile(nutrient)
             
+            logger.debug(f"Processing nutrient: {nutrient} -> mapped to profile key: {profile_nutrient}")
+            logger.debug(f"Profile keys available: {list(profile.keys())}")
+            
             if profile_nutrient in profile:
                 min_val = profile[profile_nutrient]["min"]
                 max_val = profile[profile_nutrient]["max"]
                 
                 logger.info(f"Setting constraints for {nutrient} (profile: {profile_nutrient}): min={min_val}, max={max_val}")
+            else:
+                logger.warning(f"Profile key '{profile_nutrient}' not found in profile for nutrient '{nutrient}'. Available keys: {list(profile.keys())}")
                 
                 # Correct approach: 
                 # sum(nutrient_value * x[i,j]) >= min_val * total_meals

@@ -436,8 +436,14 @@
             };
 
             // Debug: Log requirements being sent
-            console.log('Sending requirements:', requirements);
-            console.log('minCalories value:', requirements.minCalories);
+            console.log('=== Frontend: Sending requirements ===');
+            console.log('Full requirements object:', JSON.stringify(requirements, null, 2));
+            console.log('Key values:', {
+                minCalories: requirements.minCalories,
+                minVitaminD: requirements.minVitaminD,
+                maxVitaminD: requirements.maxVitaminD,
+                minProtein: requirements.minProtein
+            });
 
             // Get selected objective and meal frequency
             const objective = document.querySelector('input[name="objective"]:checked').value;
